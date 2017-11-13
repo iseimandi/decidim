@@ -1,0 +1,17 @@
+es:
+  decidim:
+    authorizations:
+      new:
+        authorize: Autorizar
+    authorization_handlers:
+      census_authorization_handler:
+        name: Padrón municipal
+  census_authorization:
+    errors:
+      messages:
+        not_in_census: Esta persona no figura en el censo municipal o es menor de 16 años
+    form:
+      date_select:
+        day: Día
+        month: Mes
+        year: Año

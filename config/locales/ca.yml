@@ -1,0 +1,17 @@
+ca:
+  decidim:
+    authorizations:
+      new:
+        authorize: Autoritzar
+    authorization_handlers:
+      census_authorization_handler:
+        name: Padró municipal
+  census_authorization:
+    errors:
+      messages:
+        not_in_census: Aquesta persona no figura en el cens municipal o és menor de 16 anys
+    form:
+      date_select:
+        day: Dia
+        month: Mes
+        year: Any
