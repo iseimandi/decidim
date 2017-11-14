@@ -2,7 +2,7 @@
 
 Decidim.configure do |config|
   config.application_name = "My Application Name"
-  config.mailer_sender = "change-me@domain.org"
+  config.mailer_sender = Rails.application.secrets.mailer_sender
   config.authorization_handlers = ["CensusAuthorizationHandler"]
   config.default_locale = :ca
   config.available_locales = [:ca, :es]
