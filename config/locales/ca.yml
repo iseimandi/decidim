@@ -1,17 +1,25 @@
+---
 ca:
-  decidim:
-    authorizations:
-      new:
-        authorize: Autoritzar
-    authorization_handlers:
+  activemodel:
+    attributes:
       census_authorization_handler:
-        name: Padró municipal
+        date_of_birth: Data de naixement
+        document_number: DNI
+        postal_code: Codi postal
   census_authorization:
     errors:
       messages:
-        not_in_census: Aquesta persona no figura en el cens municipal o és menor de 16 anys
+        not_in_census: Aquesta persona no figura en el cens municipal o és menor de
+          16 anys
     form:
       date_select:
         day: Dia
         month: Mes
         year: Any
+  decidim:
+    authorization_handlers:
+      census_authorization_handler:
+        name: Padró municipal
+    authorizations:
+      new:
+        authorize: Autoritzar

@@ -41,9 +41,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   private
 
   def user_exists_in_census
-    user = CensusClient.person_exists?(document_number, date_of_birth, postal_code)
-
-    if user.nil?
+    if !CensusClient.person_exists?(document_number, date_of_birth, postal_code)
       errors.add(:document_number, I18n.t('census_authorization.errors.messages.not_in_census'))
     end
   end
