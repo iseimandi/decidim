@@ -20,3 +20,6 @@
 
 # Ignore public uploads
 public/uploads
+
+.env
+.rbenv-vars
