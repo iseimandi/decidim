@@ -15,6 +15,8 @@ class CensusClient
     Rails.logger.info "[Census WS] Response code was: #{response_code}"
 
     return (response_code == '0')
+  rescue InvalidParameter
+    return false
   end
 
   def self.client
