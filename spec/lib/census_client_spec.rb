@@ -39,34 +39,34 @@ describe CensusClient do
       expect(result).to be_falsey
     end
 
-    context 'raises exceptions' do
+    context 'with bad formatted data' do
       before do
         stubbed_response_body = { validarpadro_decidim_response: { result: 'wadus' } }
         stub_census_client(stubbed_response_body)
       end
 
-      it 'for invalid dni_number' do
+      it 'returns false for invalid dni_number' do
         dni_number = '123456789'
 
-        expect do
-          CensusClient.person_exists?(dni_number, birthdate, postal_code)
-        end.to raise_error(CensusClient::InvalidParameter)
+        result = CensusClient.person_exists?(dni_number, birthdate, postal_code)
+
+        expect(result).to be_falsey
       end
 
-      it 'for invalid postal_code' do
+      it 'returns false for invalid postal_code' do
         postal_code = '123456'
 
-        expect do
-          CensusClient.person_exists?(dni_number, birthdate, postal_code)
-        end.to raise_error(CensusClient::InvalidParameter)
+        result = CensusClient.person_exists?(dni_number, birthdate, postal_code)
+
+        expect(result).to be_falsey
       end
 
-      it 'for invalid birthdate' do
-        birthdate = nil
+      it 'returns false for invalid birthdate' do
+        birthdate = '12-1-1999'
 
-        expect do
-          CensusClient.person_exists?(dni_number, birthdate, postal_code)
-        end.to raise_error(CensusClient::InvalidParameter)
+        result = CensusClient.person_exists?(dni_number, birthdate, postal_code)
+
+        expect(result).to be_falsey
       end
     end
 

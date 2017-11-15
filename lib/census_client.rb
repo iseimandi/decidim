@@ -45,7 +45,7 @@ class CensusClient
   private_class_method :census_endpoint
 
   def self.validate_parameters!(dni_number, formatted_birthdate, postal_code)
-    if (dni_number.length != 8) || (postal_code.length != 5) || (formatted_birthdate.nil?)
+    if /^\d{8}$/.match(dni_number).nil? || /^\d{5}$/.match(postal_code).nil? || /^\d{2}\/\d{2}\/\d{4}$/.match(formatted_birthdate).nil?
       Rails.logger.info "[Census WS] Attempted to build invalid message: dni_number=#{dni_number}, formatted_birthdate=#{formatted_birthdate}, postal_code=#{postal_code}"
       raise InvalidParameter
     end
