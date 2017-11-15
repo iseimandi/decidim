@@ -9,7 +9,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   attribute :date_of_birth, Date
 
   validates :date_of_birth, presence: true
-  validates :document_number, format: { with: /\A[A-z0-9]*\z/ }, presence: true, length: { in: 9..10 }  # 9 for DNI & NIE, 10 for passport
+  validates :document_number, presence: true, format: { with: /\A[0-9]*\z/ }, length: { is: 8 }
   validates :postal_code, presence: true, format: { with: /\A[0-9]*\z/ }, length: { is: 5 }
 
   validate :user_exists_in_census
@@ -34,16 +34,20 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
   def unique_id
     Digest::MD5.hexdigest(
-      "#{document_number}-#{Rails.application.secrets.secret_key_base}"
+      "#{document_number}-#{formatted_birthdate}-#{Rails.application.secrets.secret_key_base}"
     )
   end
 
   private
 
   def user_exists_in_census
-    if !CensusClient.person_exists?(document_number, date_of_birth, postal_code)
-      errors.add(:document_number, I18n.t('census_authorization.errors.messages.not_in_census'))
+    if !CensusClient.person_exists?(document_number, formatted_birthdate, postal_code)
+      errors.add(:wadus, 'wadus')
     end
+  end
+
+  def formatted_birthdate
+    date_of_birth.strftime('%d/%m/%Y') if date_of_birth.present?
   end
 
 end

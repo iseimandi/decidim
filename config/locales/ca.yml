@@ -4,7 +4,7 @@ ca:
     attributes:
       census_authorization_handler:
         date_of_birth: Data de naixement
-        document_number: DNI
+        document_number: DNI (sense lletra)
         postal_code: Codi postal
   census_authorization:
     errors:
@@ -21,5 +21,8 @@ ca:
       census_authorization_handler:
         name: Padró municipal
     authorizations:
+      create:
+        error: S'ha produït un error en crear l'autorització. És possible que no figuri
+          en el cens o sigui menor de 16 anys.
       new:
         authorize: Autoritzar

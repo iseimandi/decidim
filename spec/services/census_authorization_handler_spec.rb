@@ -6,9 +6,9 @@ require "decidim/dev/test/authorization_shared_examples"
 describe CensusAuthorizationHandler do
   let(:subject) { handler }
   let(:handler) { described_class.from_params(params) }
-  let(:document_number) { "12345678A" }
+  let(:document_number) { "12345678" }
   let(:date_of_birth) { Date.civil(1987, 9, 17) }
-  let(:postal_code) { '28003' }
+  let(:postal_code) { '12345' }
   let(:params) do
     {
       document_number: document_number,
@@ -44,12 +44,6 @@ describe CensusAuthorizationHandler do
       it { is_expected.not_to be_valid }
     end
 
-    # context "when it's under 16" do
-    #   let(:date_of_birth) { 15.years.ago }
-
-    #   it { is_expected.not_to be_valid }
-    # end
-
     context "when data from a date field is provided" do
       let(:params) do
         {
@@ -71,6 +65,13 @@ describe CensusAuthorizationHandler do
 
   describe "when everything is fine" do
     it { is_expected.to be_valid }
+  end
+
+  describe "unique_id" do
+    it "is correctly constructed" do
+      expected_unique_id = Digest::MD5.hexdigest("12345678-17/09/1987-#{Rails.application.secrets.secret_key_base}")
+      expect(subject.unique_id).to eq(expected_unique_id)
+    end
   end
 
 end

@@ -4,7 +4,7 @@ es:
     attributes:
       census_authorization_handler:
         date_of_birth: Fecha de nacimiento
-        document_number: DNI
+        document_number: DNI (sin letra)
         postal_code: Código postal
   census_authorization:
     errors:
@@ -21,5 +21,8 @@ es:
       census_authorization_handler:
         name: Padrón municipal
     authorizations:
+      create:
+        error: No ha sido posible verificar a esta persona. Es posible que no figure
+          en el censo o sea menor de 16 años.
       new:
         authorize: Autorizar

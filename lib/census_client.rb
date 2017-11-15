@@ -4,12 +4,15 @@ class CensusClient
 
   class InvalidParameter < StandardError; end
 
-  def self.person_exists?(dni, birthdate, postal_code)
-    response = client.call(
-      :validarpadro_decidim,
-      message: build_message(dni, birthdate, postal_code)
-    )
+  def self.person_exists?(dni_number, formatted_birthdate, postal_code)
+    message = build_message(dni_number, formatted_birthdate, postal_code)
+
+    Rails.logger.info "[Census WS] Sending request with message: #{message}"
+
+    response = client.call(:validarpadro_decidim, message: message)
     response_code = response.body[:validarpadro_decidim_response][:result]
+
+    Rails.logger.info "[Census WS] Response code was: #{response_code}"
 
     return (response_code == '0')
   end
@@ -19,16 +22,16 @@ class CensusClient
   end
   private_class_method :client
 
-  def self.build_message(dni, birthdate, postal_code)
-    validate_parameters!(dni, birthdate, postal_code)
+  def self.build_message(dni_number, formatted_birthdate, postal_code)
+    validate_parameters!(dni_number, formatted_birthdate, postal_code)
 
     {
       idioma: 'ca/es',
-      dni: dni[0..7],
+      dni: dni_number,
       letra: '', # letter is not checked by census
       obs: '',
       obj: '',
-      datanaixement: birthdate.strftime('%d/%m/%Y'),
+      datanaixement: formatted_birthdate,
       cp: postal_code
     }
   end
@@ -39,10 +42,11 @@ class CensusClient
   end
   private_class_method :census_endpoint
 
-  def self.validate_parameters!(dni, birthdate, postal_code)
-    if (dni.length != 9) ||
-       (postal_code.nil?)
-    then raise InvalidParameter end
+  def self.validate_parameters!(dni_number, formatted_birthdate, postal_code)
+    if (dni_number.length != 8) || (postal_code.length != 5) || (formatted_birthdate.nil?)
+      Rails.logger.info "[Census WS] Attempted to build invalid message: dni_number=#{dni_number}, formatted_birthdate=#{formatted_birthdate}, postal_code=#{postal_code}"
+      raise InvalidParameter
+    end
   end
   private_class_method :validate_parameters!
 

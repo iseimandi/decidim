@@ -17,15 +17,15 @@ describe CensusClient do
 
   describe '::person_exists?' do
 
-    let(:dni) { '12345689A' }
-    let(:birthdate) { Date.civil(1994, 12, 30) }
-    let(:postal_code) { 28003 }
+    let(:dni_number) { '12345678' }
+    let(:birthdate) { Date.civil(1994, 12, 30).strftime('%d/%m/%Y') }
+    let(:postal_code) { '12345' }
 
     it 'is true when person exists' do
       stubbed_response_body = { validarpadro_decidim_response: { result: '0' } }
       stub_census_client(stubbed_response_body)
 
-      result = CensusClient.person_exists?(dni, birthdate, postal_code)
+      result = CensusClient.person_exists?(dni_number, birthdate, postal_code)
 
       expect(result).to be_truthy
     end
@@ -34,26 +34,40 @@ describe CensusClient do
       stubbed_response_body = { validarpadro_decidim_response: { result: 'wadus' } }
       stub_census_client(stubbed_response_body)
 
-      result = CensusClient.person_exists?(dni, birthdate, postal_code)
+      result = CensusClient.person_exists?(dni_number, birthdate, postal_code)
 
       expect(result).to be_falsey
     end
 
-    it 'raises exceptions for bad formatted data' do
-      stubbed_response_body = { validarpadro_decidim_response: { result: 'wadus' } }
-      stub_census_client(stubbed_response_body)
+    context 'raises exceptions' do
+      before do
+        stubbed_response_body = { validarpadro_decidim_response: { result: 'wadus' } }
+        stub_census_client(stubbed_response_body)
+      end
 
-      dni = 'wadus'
+      it 'for invalid dni_number' do
+        dni_number = '123456789'
 
-      expect do
-        CensusClient.person_exists?(dni, birthdate, postal_code)
-      end.to raise_error(CensusClient::InvalidParameter)
+        expect do
+          CensusClient.person_exists?(dni_number, birthdate, postal_code)
+        end.to raise_error(CensusClient::InvalidParameter)
+      end
 
-      dni = '12345689'
+      it 'for invalid postal_code' do
+        postal_code = '123456'
 
-      expect do
-        CensusClient.person_exists?(dni, birthdate, postal_code)
-      end.to raise_error(CensusClient::InvalidParameter)
+        expect do
+          CensusClient.person_exists?(dni_number, birthdate, postal_code)
+        end.to raise_error(CensusClient::InvalidParameter)
+      end
+
+      it 'for invalid birthdate' do
+        birthdate = nil
+
+        expect do
+          CensusClient.person_exists?(dni_number, birthdate, postal_code)
+        end.to raise_error(CensusClient::InvalidParameter)
+      end
     end
 
   end
