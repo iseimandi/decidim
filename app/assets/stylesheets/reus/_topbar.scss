@@ -5,11 +5,11 @@
   padding: 0.2rem 0;
 }
 
-.show-for-medium {
+.reus {
   z-index: 1;
   position: relative;
 
-  &.show-for-medium--not-home {
+  &.reus--not-home {
     background-color: $black;
 
     img {

@@ -15,4 +15,10 @@ main {
       }
     }
   }
+
+  .section-heading::before {
+    width: 1em;
+    height: 1em;
+    background-color: $yellow;
+  }
 }
