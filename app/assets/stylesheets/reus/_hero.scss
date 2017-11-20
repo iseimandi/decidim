@@ -1,7 +1,10 @@
 @import "helpers/**/*";
 
 main {
-  margin-top: -137px;
+
+  &.main-home {
+    margin-top: -137px;
+  }
 
   section.hero {
     .hero__container {

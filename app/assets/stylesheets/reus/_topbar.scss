@@ -9,6 +9,18 @@
   z-index: 1;
   position: relative;
 
+  &.show-for-medium--not-home {
+    background-color: $black;
+
+    img {
+      transform: scale(0.8);
+    }
+
+    .reus-bar {
+      height: auto;
+    }
+  }
+
   &::after {
     content: "";
     display: block;
@@ -19,7 +31,7 @@
     background-color: transparent;
   }
 
-  // Bring all elements inside to front
+  // Bring to front all elements inside
   & * {
     z-index: 2;
   }

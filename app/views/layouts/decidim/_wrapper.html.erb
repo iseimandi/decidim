@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <div class="show-for-medium" data-set="nav-holder">
+        <div class="show-for-medium <%= (request.path != '/') ? 'show-for-medium--not-home' : '' %>" data-set="nav-holder">
           <div class="row column reus-bar">
             <a href="/">
               <%= image_tag("reus-participa.png", alt: "Reus participa" ) %>
@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <main>
+        <main class="<%= (request.path == '/') ? 'main-home' : '' %>">
           <%= display_flash_messages %>
           <%= yield %>
         </main>
