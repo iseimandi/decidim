@@ -62,7 +62,9 @@
 
         <div class="show-for-medium" data-set="nav-holder">
           <div class="row column reus-bar">
-            <img src="reus-participa.png" alt="">
+            <a href="/">
+              <%= image_tag("reus-participa.png", alt: "Reus participa" ) %>
+            </a>
             <div class="navbar-container">
               <div class="social-networks">
                 <% if current_organization.twitter_handler.present? %>
@@ -94,7 +96,7 @@
           <%= yield %>
         </main>
       </div><!-- /.footer-separator -->
-      <div class="main-footer">
+      <!-- <div class="main-footer">
         <% if current_organization.official_img_footer? %>
           <%= link_to  current_organization.official_url, class: "main-footer__badge" do %>
             <%= image_tag current_organization.official_img_footer.url.to_s , alt: current_organization.name %>
@@ -112,28 +114,89 @@
           </div>
           <%= render partial: 'layouts/decidim/social_media_links' %>
         </div>
-      </div>
-      <div class="mini-footer">
-        <div class="row">
-          <div class="medium-3 large-4 column">
-            <a rel="license" class="cc-badge"
-               href="http://creativecommons.org/licenses/by-sa/4.0/"
-               target="_blank">
-              <%= image_tag("decidim/cc-badge.png", alt: "Creative Commons License" ) %>
-            </a>
-            <%= t('layouts.decidim.footer.made_with_open_source').html_safe %>
+      </div> -->
+      <footer>
+        <section class="footer-ajuntament bg-black py-5">
+          <div class="row column">
+            <div class="medium-12 columns text-center">
+              <h5>REUS PARTICIPA</h5>
+              <hr>
+            </div> <!-- col sm 12 -->
+          </div> <!-- row -->
+          <div class="row column mt-3">
+            <div class="medium-6 columns">
+              <small>
+                <strong>C/Sant Joan (antic hospital)</strong><br>
+                Tel. 977 010 010<br>
+                <a href="mailto:info.participa@reus.cat">info.participa@reus.cat</a><br>
+                <a href="http://participa.reus.cat/" target="_blank">participa.reus.cat</a>
+              </small>
+            </div>
+            <div class="medium-6 columns">
+              <small>
+                <strong>Segueix-nos a les xarxes</strong>
+              </small><br>
+              <% if current_organization.twitter_handler.present? %>
+                <a target="_blank" title="Twitter" href="https://twitter.com/<%= current_organization.twitter_handler %>">
+                  <span class="fa-stack fa-2x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              <% end %>
+              <% if current_organization.facebook_handler.present? %>
+                <a target="_blank" title="Facebook" href="https://www.facebook.com/<%= current_organization.facebook_handler %>">
+                  <span class="fa-stack fa-2x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              <% end %>
+            </div>
           </div>
-          <div class="medium-3 large-2 column">
-            <div class="decidim-logo">
-              <a rel="decidim"
-                 href="https://decidim.org/"
-                 target="_blank">
-                <%= image_tag("decidim/decidim-logo.svg", alt: "Decidim Logo" ) %>
+        </section>
+        <section class="footer-politicas bg-gray py-5">
+          <div class="row column">
+            <div class="medium-6 small-12 columns">
+              <p>
+                <a class="pr-2" href="http://www.reus.cat" target="_blank" title="anar a Reus.cat">Reus.cat</a>.
+                <a class="pr-2" href="http://www.reus.cat/info_cookies" target="_blank" title="consulta la política de cookies">Política de cookies</a>.
+                <!-- <a class="pr-2" href="">Avís legal</a>.  -->
+                <a class="pr-2" href="http://www.reus.cat/contacta" target="_blank" title="contacta amb l'Ajuntament de Reus">Contacta</a>.
+                <a class="pr-2" href="http://www.reus.cat/accessibilitat" target="_blank" title="consulta la política d'accessibilitat">Accessibilitat</a></p>
+              <hr>
+              <small>© Ajuntament de Reus  Plaça del Mercadal · 43201 Reus<br>
+              977 010 010 · <a href="mailto:ajuntament@reus.cat" title="envia un correu electrònic a l'Ajuntament de Reus">ajuntament@reus.cat</a></small>
+            </div>
+            <div class="medium-6 small-12 columns">
+              <a href="http://www.reus.cat" target="_blank" title="anar a Reus.cat">
+                <%= image_tag("logo-reus-footer.png", alt: "Ajuntament de Reus" ) %>
               </a>
             </div>
           </div>
+        </section>
+        <div class="mini-footer">
+          <div class="row">
+            <div class="medium-3 large-4 column">
+              <a rel="license" class="cc-badge"
+                 href="http://creativecommons.org/licenses/by-sa/4.0/"
+                 target="_blank">
+                <%= image_tag("decidim/cc-badge.png", alt: "Creative Commons License" ) %>
+              </a>
+              <%= t('layouts.decidim.footer.made_with_open_source').html_safe %>
+            </div>
+            <div class="medium-3 large-2 column">
+              <div class="decidim-logo">
+                <a rel="decidim"
+                   href="https://decidim.org/"
+                   target="_blank">
+                  <%= image_tag("decidim/decidim-logo.svg", alt: "Decidim Logo" ) %>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </footer>
     </div><!--/.off-canvas-content-->
   </div><!--/.off-canvas-wrapper-inner-->
 </div><!--/.off-canvas-wrapper-->

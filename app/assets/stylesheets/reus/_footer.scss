@@ -1,0 +1,93 @@
+@import "helpers/**/*";
+
+footer {
+  .footer-ajuntament {
+    color: $white;
+
+    hr {
+      width: 33px;
+      border: 1px solid $white;
+      height: 4px;
+      background-color: $white;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    small,
+    small a {
+      color: $white;
+    }
+
+    .fa-stack {
+      opacity: 0.8;
+      
+      i:first-child {
+        color: $white;
+      }
+
+      i:last-child {
+        color: $black;
+      }
+    }
+  }
+
+  small {
+    @include font($size: 80%);
+  }
+
+  .mt-3 {
+    margin-top: 1rem !important;
+  }
+
+  .bg-black {
+    background-color: $black;
+  }
+
+  .p-2 {
+    padding: 0.5rem 0.5rem !important;
+  }
+
+  .mt-2 {
+    margin-top: 0.5rem !important;
+  }
+
+  .pr-2 {
+    padding-right: 0.5rem !important;
+  }
+
+  .py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .footer-politicas {
+    hr {
+      width: 33px;
+      border: 0;
+      border: 1px solid #E5E5E5;
+      height: 4px;
+      background-color: #e5e5e5;
+      margin: 1rem 0;
+    }
+
+    &,
+    a,
+    a:hover {
+      color: #95989A;
+      text-decoration: none;
+    }
+
+    .medium-6.small-12.columns {
+      position: relative;
+
+      img {
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
+
+  .bg-gray {
+    background-color: $gray;
+  }
+}
