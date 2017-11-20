@@ -64,10 +64,21 @@
           <div class="row column reus-bar">
             <img src="reus-participa.png" alt="">
             <div class="navbar-container">
-              <div class="social-networks">facebook y twitter</div>
+              <div class="social-networks">
+                <% if current_organization.twitter_handler.present? %>
+                  <a target="_blank" title="Twitter" href="https://twitter.com/<%= current_organization.twitter_handler %>">
+                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                  </a>
+                <% end %>
+                <% if current_organization.facebook_handler.present? %>
+                  <a target="_blank" title="Facebook" href="https://www.facebook.com/<%= current_organization.facebook_handler %>">
+                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                  </a>
+                <% end %>
+              </div>
               <nav class="navbar js-append">
-                <ul>  
-                 <li> <a class="activo" href="#queson" title="que són els pressupostos participatius">QUÈ SON</a></li>
+                <ul>
+                 <li> <a class="active" href="#queson" title="que són els pressupostos participatius">QUÈ SON</a></li>
                  <li> <a href="#quiparticipa" title="qui pot participar">QUI</a></li>
                  <li> <a href="#comparticipa" title="com pots participar">COM</a></li>
                  <li> <a href="#quanparticipa" title="quan es pot participar">QUAN</a></li>

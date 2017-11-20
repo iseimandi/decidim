@@ -1,3 +1,5 @@
+@import "helpers/**/*";
+
 .title-bar {
   z-index: 1;
   padding: 0.2rem 0;
@@ -17,6 +19,11 @@
     background-color: transparent;
   }
 
+  // Bring all elements inside to front
+  & * {
+    z-index: 2;
+  }
+
   .reus-bar {
     height: 137px;
     display: flex;
@@ -28,8 +35,8 @@
       flex-direction: column;
       align-items: flex-end;
 
-      .social-networkd {
-        // float: right;
+      .social-networks a {
+        @include font($size: 30px, $color: $white);
       }
 
       .navbar {
@@ -44,10 +51,12 @@
             text-transform: uppercase;
 
             a {
-              color: #fff;
               padding-left: 2rem;
-              text-decoration: none;
-              opacity: 0.8;
+              @include font($color: $white);
+
+              &.active {
+                color: $yellow;
+              }
             }
           }
         }
