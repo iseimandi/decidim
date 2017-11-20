@@ -20,7 +20,7 @@ footer {
 
     .fa-stack {
       opacity: 0.8;
-      
+
       i:first-child {
         color: $white;
       }
@@ -83,6 +83,13 @@ footer {
       img {
         position: absolute;
         right: 0;
+
+        @include mobile {
+          display: block;
+          margin: 0 auto;
+          position: static;
+          padding-top: 2rem;
+        }
       }
     }
   }
