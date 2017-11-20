@@ -12,6 +12,8 @@ main {
 
       a.button {
         background-color: $yellow;
+        color: $yellow2;
+        // color: $primary; // Decidim default variables (decidim.scss)
       }
     }
   }
