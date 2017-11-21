@@ -30,8 +30,10 @@ ca:
     decidim:
       wrapper:
         accessibility: Accessibilitat
+        accessibility_link_title: Consulta la política d'accessibilitat
+        city_council_address: "© Ajuntament de Reus  Plaça del Mercadal · 43201 Reus"
         contact: Contacta
         cookies_policy: Política de cookies
         follow_us: Segueix-nos a les xarxes
         participation_address: C/Sant Joan (antic hospital)
-        city_council_address: "© Ajuntament de Reus  Plaça del Mercadal · 43201 Reus"
+        reus_link_title: anar a reus.cat
