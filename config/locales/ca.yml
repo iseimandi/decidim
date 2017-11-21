@@ -26,3 +26,12 @@ ca:
           en el cens o sigui menor de 16 anys.
       new:
         authorize: Autoritzar
+  layouts:
+    decidim:
+      wrapper:
+        accessibility: Accessibilitat
+        contact: Contacta
+        cookies_policy: Política de cookies
+        follow_us: Segueix-nos a les xarxes
+        participation_address: C/Sant Joan (antic hospital)
+        city_council_address: "© Ajuntament de Reus  Plaça del Mercadal · 43201 Reus"

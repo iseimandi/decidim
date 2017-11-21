@@ -78,7 +78,24 @@
                   </a>
                 <% end %>
               </div>
-              <nav class="navbar js-append">
+
+              <%= main_menu.render
+                           .gsub("<li class=\"main-nav__link\">", "<li>")
+                           .gsub("<nav class=\"main-nav\">", "<nav class=\"navbar js-append\">")
+                           .gsub("<li class=\"main-nav__link main-nav__link--active\">", "<li class=\"active\">")
+                           .html_safe
+              %>
+
+              <!--<nav class="navbar js-append">
+                <ul>
+                  <li><a href="/">Inici</a></li>
+                  <li><a href="/processes">Processos</a></li>
+                  <li><a href="/pages">Més informació</a>
+                  </li>
+                </ul>
+              </nav>-->
+
+              <!--<nav class="navbar js-append">
                 <ul>
                  <li> <a class="active" href="#queson" title="que són els pressupostos participatius">QUÈ SON</a></li>
                  <li> <a href="#quiparticipa" title="qui pot participar">QUI</a></li>
@@ -86,7 +103,8 @@
                  <li> <a href="#quanparticipa" title="quan es pot participar">QUAN</a></li>
                  <li> <a href="#documentacio" title="documentació del projecte">DOCUMENTACIÓ</a></li>
                 </ul>
-              </nav>
+              </nav>-->
+
             </div>
           </div>
         </div>
@@ -126,7 +144,7 @@
           <div class="row column mt-3">
             <div class="medium-6 columns">
               <small>
-                <strong>C/Sant Joan (antic hospital)</strong><br>
+                <strong><%= t('.participation_address') %></strong><br>
                 Tel. 977 010 010<br>
                 <a href="mailto:info.participa@reus.cat">info.participa@reus.cat</a><br>
                 <a href="http://participa.reus.cat/" target="_blank">participa.reus.cat</a>
@@ -134,7 +152,7 @@
             </div>
             <div class="medium-6 columns">
               <small>
-                <strong>Segueix-nos a les xarxes</strong>
+                <strong><%= t('.follow_us') %></strong>
               </small><br>
               <% if current_organization.twitter_handler.present? %>
                 <a target="_blank" title="Twitter" href="https://twitter.com/<%= current_organization.twitter_handler %>">
@@ -160,12 +178,12 @@
             <div class="medium-6 small-12 columns">
               <p>
                 <a class="pr-2" href="http://www.reus.cat" target="_blank" title="anar a Reus.cat">Reus.cat</a>.
-                <a class="pr-2" href="http://www.reus.cat/info_cookies" target="_blank" title="consulta la política de cookies">Política de cookies</a>.
+                <a class="pr-2" href="http://www.reus.cat/info_cookies" target="_blank" title="consulta la política de cookies"><%= t('.cookies_policy') %></a>.
                 <!-- <a class="pr-2" href="">Avís legal</a>.  -->
-                <a class="pr-2" href="http://www.reus.cat/contacta" target="_blank" title="contacta amb l'Ajuntament de Reus">Contacta</a>.
-                <a class="pr-2" href="http://www.reus.cat/accessibilitat" target="_blank" title="consulta la política d'accessibilitat">Accessibilitat</a></p>
+                <a class="pr-2" href="http://www.reus.cat/contacta" target="_blank" title="contacta amb l'Ajuntament de Reus"><%= t('.contact') %></a>.
+                <a class="pr-2" href="http://www.reus.cat/accessibilitat" target="_blank" title="consulta la política d'accessibilitat"><%= t('.accessibility') %></a></p>
               <hr>
-              <small>© Ajuntament de Reus  Plaça del Mercadal · 43201 Reus<br>
+              <small><%= t('.city_council_address') %><br>
               977 010 010 · <a href="mailto:ajuntament@reus.cat" title="envia un correu electrònic a l'Ajuntament de Reus">ajuntament@reus.cat</a></small>
             </div>
             <div class="medium-6 small-12 columns">

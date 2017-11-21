@@ -78,13 +78,13 @@
             text-align: right;
             text-transform: uppercase;
 
+            &.active a {
+              color: $yellow;
+            }
+
             a {
               padding-left: 2rem;
               @include font($color: $white);
-
-              &.active {
-                color: $yellow;
-              }
             }
           }
         }
