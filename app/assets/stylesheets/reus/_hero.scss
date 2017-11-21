@@ -1,7 +1,4 @@
-@import "helpers/**/*";
-
 main {
-
   &.main-home {
     margin-top: -137px;
   }
@@ -12,8 +9,8 @@ main {
 
       a.button {
         background-color: $yellow;
-        color: $yellow2;
-        // color: $primary; // Decidim default variables (decidim.scss)
+        // color: $yellow2;
+        color: $primary; // Decidim default variables (decidim.scss)
       }
     }
   }
