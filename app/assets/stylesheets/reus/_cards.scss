@@ -1,0 +1,25 @@
+// Hack REUS
+// on mobile, applies default style
+@media only screen and (min-width: $mobile) {
+
+  .card-grid:only-child {
+    display: block;
+
+    .column {
+      width: 100%;
+
+      article.card {
+        flex-direction: row-reverse;
+
+        a.card__link {
+          flex: 2;
+        }
+
+        .card__image-top {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+}

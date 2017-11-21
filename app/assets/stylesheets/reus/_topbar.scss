@@ -1,0 +1,94 @@
+.title-bar {
+  z-index: 2;
+  padding: 0.2rem 0;
+}
+
+.reus {
+  z-index: 1;
+  position: relative;
+
+  @include mobile {
+    display: block !important;
+  }
+
+  &.reus--not-home {
+    background-color: $black;
+
+    img {
+      transform: scale(0.8);
+    }
+
+    .reus-bar {
+      height: auto;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+
+  // Bring to front all elements inside
+  & * {
+    z-index: 2;
+  }
+
+  @include mobile {
+    img {
+      padding-top: 1em;
+    }
+  }
+
+  .reus-bar {
+    height: 137px;
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      align-items: flex-start;
+    }
+
+    .navbar-container {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      .social-networks a {
+        @include font($size: 30px, $color: $white);
+      }
+
+      .navbar {
+        background: transparent;
+
+        ul {
+          display: flex;
+          list-style-type: none;
+
+          @include mobile {
+            flex-direction: column;
+          }
+
+          li {
+            text-align: right;
+            text-transform: uppercase;
+
+            &.active a {
+              color: $yellow;
+            }
+
+            a {
+              padding-left: 2rem;
+              @include font($color: $white);
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,220 @@
+<div class="off-canvas-wrapper">
+  <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+    <div class="off-canvas position-right hide-for-large" data-position="right"
+         id="offCanvas" data-off-canvas>
+      <!-- Close button -->
+      <button class="close-button"
+              aria-label="<%= t("layouts.decidim.header.close_menu") %>" type="button"
+              data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <!-- Menu -->
+      <div class="hide-for-medium" data-set="nav-holder"></div>
+      <div class="hide-for-medium usermenu-off-canvas-holder"
+           data-set="nav-login-holder"></div>
+    </div>
+    <div class="off-canvas-content" data-off-canvas-content>
+      <div class="footer-separator">
+        <!--separates the footer from the rest of the page,
+             creates a sticky footer-->
+        <!-- Topbar -->
+        <div class="title-bar">
+          <div class="row column topbar">
+            <div class="logo-wrapper">
+              <%= render partial: "layouts/decidim/logo", locals: { organization: current_organization } %>
+            </div>
+            <%= render partial: "layouts/decidim/language_chooser" %>
+            <div class="hide-for-medium topbar__menu">
+              <button type="button" data-toggle="offCanvas">
+                <%= icon "menu", aria_label: t('layouts.decidim.header.navigation'), role: "img" %>
+              </button>
+            </div>
+            <% if current_user %>
+              <div class="topbar__dropmenu topbar__user__logged">
+                <%= link_to decidim.notifications_path, class: "topbar__notifications #{current_user.notifications.any? ? "is-active" : ""}" do %>
+                  <%= icon "bell" %>
+                <% end %>
+                <ul class="dropdown menu" data-dropdown-menu>
+                  <li class="is-dropdown-submenu-parent show-for-medium">
+                    <%= link_to current_user.name, decidim.account_path %>
+                    <ul class="menu is-dropdown-submenu js-append usermenu-off-canvas">
+                      <%= render partial: "layouts/decidim/user_menu" %>
+                    </ul>
+                    <span data-set="nav-login-holder" class="show-for-medium">
+                      <!-- Repeated due to dropdown limitations -->
+                      <ul class="menu is-dropdown-submenu js-append usermenu-off-canvas">
+                        <%= render partial: "layouts/decidim/user_menu" %>
+                      </ul>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            <% else %>
+              <div class="topbar__user show-for-medium" data-set="nav-login-holder">
+                <div class="topbar__user__login js-append">
+                  <%= link_to t('layouts.decidim.header.sign_up'), decidim.new_user_registration_path, class: "sign-up-link" %>
+                  <%= link_to t('layouts.decidim.header.sign_in'), decidim.new_user_session_path, class: "sign-in-link" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="show-for-medium reus<%= (request.path != '/') ? ' reus--not-home' : '' %>" data-set="nav-holder">
+          <div class="row column reus-bar">
+            <a href="/">
+              <%= image_tag("reus-participa.png", alt: "Reus participa" ) %>
+            </a>
+            <div class="navbar-container">
+              <div class="social-networks">
+                <% if current_organization.twitter_handler.present? %>
+                  <a target="_blank" title="Twitter" href="https://twitter.com/<%= current_organization.twitter_handler %>">
+                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                  </a>
+                <% end %>
+                <% if current_organization.facebook_handler.present? %>
+                  <a target="_blank" title="Facebook" href="https://www.facebook.com/<%= current_organization.facebook_handler %>">
+                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                  </a>
+                <% end %>
+              </div>
+
+              <%= main_menu.render
+                           .gsub("<li class=\"main-nav__link\">", "<li>")
+                           .gsub("<nav class=\"main-nav\">", "<nav class=\"navbar js-append\">")
+                           .gsub("<li class=\"main-nav__link main-nav__link--active\">", "<li class=\"active\">")
+                           .html_safe
+              %>
+
+              <!--<nav class="navbar js-append">
+                <ul>
+                  <li><a href="/">Inici</a></li>
+                  <li><a href="/processes">Processos</a></li>
+                  <li><a href="/pages">Més informació</a>
+                  </li>
+                </ul>
+              </nav>-->
+
+              <!--<nav class="navbar js-append">
+                <ul>
+                 <li> <a class="active" href="#queson" title="que són els pressupostos participatius">QUÈ SON</a></li>
+                 <li> <a href="#quiparticipa" title="qui pot participar">QUI</a></li>
+                 <li> <a href="#comparticipa" title="com pots participar">COM</a></li>
+                 <li> <a href="#quanparticipa" title="quan es pot participar">QUAN</a></li>
+                 <li> <a href="#documentacio" title="documentació del projecte">DOCUMENTACIÓ</a></li>
+                </ul>
+              </nav>-->
+
+            </div>
+          </div>
+        </div>
+
+        <main class="<%= (request.path == '/') ? 'main-home' : '' %>">
+          <%= display_flash_messages %>
+          <%= yield %>
+        </main>
+      </div><!-- /.footer-separator -->
+      <!-- <div class="main-footer">
+        <% if current_organization.official_img_footer? %>
+          <%= link_to  current_organization.official_url, class: "main-footer__badge" do %>
+            <%= image_tag current_organization.official_img_footer.url.to_s , alt: current_organization.name %>
+          <% end %>
+        <% end %>
+        <div class="row">
+          <div class="medium-8 large-6 large-offset-3 column main__footer__nav">
+            <% if current_organization.static_pages.any? %>
+              <ul class="footer-nav">
+                <% current_organization.static_pages.each do |page| %>
+                  <li><%= link_to translated_attribute(page.title), decidim.page_path(page) %></li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+          <%= render partial: 'layouts/decidim/social_media_links' %>
+        </div>
+      </div> -->
+      <footer>
+        <section class="footer-ajuntament bg-black py-5">
+          <div class="row column">
+            <div class="medium-12 columns text-center">
+              <h5>REUS PARTICIPA</h5>
+              <hr>
+            </div> <!-- col sm 12 -->
+          </div> <!-- row -->
+          <div class="row column mt-3">
+            <div class="medium-6 columns">
+              <small>
+                <strong><%= t('.participation_address') %></strong><br>
+                Tel. 977 010 010<br>
+                <a href="mailto:info.participa@reus.cat">info.participa@reus.cat</a><br>
+                <a href="http://participa.reus.cat/" target="_blank">participa.reus.cat</a>
+              </small>
+            </div>
+            <div class="medium-6 columns">
+              <small>
+                <strong><%= t('.follow_us') %></strong>
+              </small><br>
+              <% if current_organization.twitter_handler.present? %>
+                <a target="_blank" title="Twitter" href="https://twitter.com/<%= current_organization.twitter_handler %>">
+                  <span class="fa-stack fa-2x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              <% end %>
+              <% if current_organization.facebook_handler.present? %>
+                <a target="_blank" title="Facebook" href="https://www.facebook.com/<%= current_organization.facebook_handler %>">
+                  <span class="fa-stack fa-2x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              <% end %>
+            </div>
+          </div>
+        </section>
+        <section class="footer-politicas bg-gray py-5">
+          <div class="row column">
+            <div class="medium-6 small-12 columns">
+              <p>
+                <a class="pr-2" href="http://www.reus.cat" target="_blank" title="anar a Reus.cat">Reus.cat</a>.
+                <a class="pr-2" href="http://www.reus.cat/info_cookies" target="_blank" title="consulta la política de cookies"><%= t('.cookies_policy') %></a>.
+                <!-- <a class="pr-2" href="">Avís legal</a>.  -->
+                <a class="pr-2" href="http://www.reus.cat/contacta" target="_blank" title="contacta amb l'Ajuntament de Reus"><%= t('.contact') %></a>.
+                <a class="pr-2" href="http://www.reus.cat/accessibilitat" target="_blank" title="consulta la política d'accessibilitat"><%= t('.accessibility') %></a></p>
+              <hr>
+              <small><%= t('.city_council_address') %><br>
+              977 010 010 · <a href="mailto:ajuntament@reus.cat" title="envia un correu electrònic a l'Ajuntament de Reus">ajuntament@reus.cat</a></small>
+            </div>
+            <div class="medium-6 small-12 columns">
+              <a href="http://www.reus.cat" target="_blank" title="anar a Reus.cat">
+                <%= image_tag("logo-reus-footer.png", alt: "Ajuntament de Reus" ) %>
+              </a>
+            </div>
+          </div>
+        </section>
+        <div class="mini-footer">
+          <div class="row">
+            <div class="medium-3 large-4 column">
+              <a rel="license" class="cc-badge"
+                 href="http://creativecommons.org/licenses/by-sa/4.0/"
+                 target="_blank">
+                <%= image_tag("decidim/cc-badge.png", alt: "Creative Commons License" ) %>
+              </a>
+              <%= t('layouts.decidim.footer.made_with_open_source').html_safe %>
+            </div>
+            <div class="medium-3 large-2 column">
+              <div class="decidim-logo">
+                <a rel="decidim"
+                   href="https://decidim.org/"
+                   target="_blank">
+                  <%= image_tag("decidim/decidim-logo.svg", alt: "Decidim Logo" ) %>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div><!--/.off-canvas-content-->
+  </div><!--/.off-canvas-wrapper-inner-->
+</div><!--/.off-canvas-wrapper-->

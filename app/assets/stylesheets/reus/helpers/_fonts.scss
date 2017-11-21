@@ -1,0 +1,25 @@
+// google fonts
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800');
+// font awesome
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+// sizes
+// NOTE: root font-size 16px
+$fM: 1rem; //16px
+$fL: 1.5rem; //24px
+$fXL: 2rem; //32px
+
+// weights
+$regular:400;
+$semibold:600;
+$bold:700;
+$extrabold:800;
+
+@mixin font($size: $fM, $weight: $regular, $style: normal, $color: false, $lh: false) {
+    font-family: 'Open Sans', sans-serif;
+    font-size: $size;
+    font-weight: $weight;
+    font-style: $style;
+    @if $color { color: $color; }
+    @if $lh { line-height: $lh; }
+}

@@ -1,0 +1,23 @@
+main {
+  &.main-home {
+    margin-top: -137px;
+  }
+
+  section.hero {
+    .hero__container {
+      padding: 12rem 0;
+
+      a.button {
+        background-color: $yellow;
+        // color: $yellow2;
+        color: $primary; // Decidim default variables (decidim.scss)
+      }
+    }
+  }
+
+  .section-heading::before {
+    width: 1em;
+    height: 1em;
+    background-color: $yellow;
+  }
+}
