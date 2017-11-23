@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.7.1"
+gem "decidim", "0.7.2"
 
 # Uncomment the following line if you want to use decidim-assemblies plugin
 # gem "decidim-assemblies", "0.7.1"
@@ -19,7 +19,7 @@ gem "savon"
 group :development, :test do
   gem "byebug", platform: :mri
   gem "rspec"
-  gem "decidim-dev", "0.7.1"
+  gem "decidim-dev", "0.7.2"
 end
 
 group :development do

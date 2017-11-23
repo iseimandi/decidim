@@ -27,3 +27,17 @@ a:hover,
 a:visited {
   opacity: 1;
 }
+
+.callout {
+  margin: 0;
+}
+
+@include mobile {
+  .off-canvas .close-button {
+    z-index: 10;
+  }
+  .usermenu-off-canvas-holder .usermenu-off-canvas.is-dropdown-submenu {
+    display: flex;
+    flex-direction: column;
+  }
+}

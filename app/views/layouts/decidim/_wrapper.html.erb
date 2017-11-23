@@ -20,8 +20,11 @@
         <!-- Topbar -->
         <div class="title-bar">
           <div class="row column topbar">
-            <div class="logo-wrapper">
-              <%= render partial: "layouts/decidim/logo", locals: { organization: current_organization } %>
+
+            <div class='logo-wrapper'>
+              <a href='http://www.reus.cat'>
+                <%= image_tag('logo-reus-negatiu.png', alt: 'Ayuntamiento de Reus') %>
+              </a>
             </div>
             <%= render partial: "layouts/decidim/language_chooser" %>
             <div class="hide-for-medium topbar__menu">
@@ -60,11 +63,21 @@
           </div>
         </div>
 
-        <div class="show-for-medium reus<%= (request.path != '/') ? ' reus--not-home' : '' %>" data-set="nav-holder">
+        <% if (request.path == '/') %>
+          <%= display_flash_messages %>
+        <% end %>
+
+        <div class="show-for-medium reus<%= (request.path != '/') ? ' reus--not-home' : '' %>" >
           <div class="row column reus-bar">
-            <a href="/">
-              <%= image_tag("reus-participa.png", alt: "Reus participa" ) %>
-            </a>
+
+            <% if current_organization %>
+              <%= link_to decidim.root_url(host: current_organization.host) do %>
+                <% if current_organization.logo.present? %>
+                  <%= image_tag current_organization.logo.url %>
+                <% end %>
+              <% end %>
+            <% end %>
+
             <div class="navbar-container">
               <div class="social-networks">
                 <% if current_organization.twitter_handler.present? %>
@@ -80,39 +93,30 @@
               </div>
 
               <%= main_menu.render
-                           .gsub("<li class=\"main-nav__link\">", "<li>")
-                           .gsub("<nav class=\"main-nav\">", "<nav class=\"navbar js-append\">")
-                           .gsub("<li class=\"main-nav__link main-nav__link--active\">", "<li class=\"active\">")
-                           .html_safe
+                          .gsub("<li class=\"main-nav__link\">", "<li>")
+                          .gsub("<nav class=\"main-nav\">", "<nav class=\"navbar js-append\">")
+                          .gsub("<li class=\"main-nav__link main-nav__link--active\">", "<li class=\"active\">")
+                          .html_safe
               %>
 
-              <!--<nav class="navbar js-append">
-                <ul>
-                  <li><a href="/">Inici</a></li>
-                  <li><a href="/processes">Processos</a></li>
-                  <li><a href="/pages">Més informació</a>
-                  </li>
-                </ul>
-              </nav>-->
-
-              <!--<nav class="navbar js-append">
-                <ul>
-                 <li> <a class="active" href="#queson" title="que són els pressupostos participatius">QUÈ SON</a></li>
-                 <li> <a href="#quiparticipa" title="qui pot participar">QUI</a></li>
-                 <li> <a href="#comparticipa" title="com pots participar">COM</a></li>
-                 <li> <a href="#quanparticipa" title="quan es pot participar">QUAN</a></li>
-                 <li> <a href="#documentacio" title="documentació del projecte">DOCUMENTACIÓ</a></li>
-                </ul>
-              </nav>-->
+              <!-- <nav class="navbar js-append">
+                <div class="row column">
+                  <%= main_menu.render %>
+                </div>
+              </nav> -->
 
             </div>
           </div>
         </div>
 
         <main class="<%= (request.path == '/') ? 'main-home' : '' %>">
-          <%= display_flash_messages %>
+          <% if (request.path != '/') %>
+            <%= display_flash_messages %>
+          <% end %>
+
           <%= yield %>
         </main>
+
       </div><!-- /.footer-separator -->
       <!-- <div class="main-footer">
         <% if current_organization.official_img_footer? %>
