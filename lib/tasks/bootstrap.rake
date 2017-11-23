@@ -12,6 +12,14 @@ namespace :bootstrap do
       name = row[0].strip.gsub('-', ' ').split(' ').map { |e| e.capitalize }.join(' ')
       email = row[1].strip.downcase
 
+      if Decidim::User.exists?(email: email)
+        puts '----- Skip user (email exists) ------'
+        puts "Nombre: #{name}"
+        puts "Email: #{email}"
+        puts '-------------------------------------'
+        next
+      end
+
       puts '------------ Create user ------------'
       puts "Nombre: #{name}"
       puts "Email: #{email}"
