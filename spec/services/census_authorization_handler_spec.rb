@@ -29,12 +29,6 @@ describe CensusAuthorizationHandler do
 
       it { is_expected.not_to be_valid }
     end
-
-    context "with an invalid format" do
-      let(:document_number) { "(╯°□°）╯︵ ┻━┻" }
-
-      it { is_expected.not_to be_valid }
-    end
   end
 
   describe "date_of_birth" do

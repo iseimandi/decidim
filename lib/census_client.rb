@@ -4,8 +4,8 @@ class CensusClient
 
   class InvalidParameter < StandardError; end
 
-  def self.person_exists?(dni_number, formatted_birthdate, postal_code)
-    message = build_message(dni_number, formatted_birthdate, postal_code)
+  def self.person_exists?(document_number, formatted_birthdate, postal_code)
+    message = build_message(document_number, formatted_birthdate, postal_code)
 
     Rails.logger.info "[Census WS] Sending request with message: #{message}"
 
@@ -24,12 +24,12 @@ class CensusClient
   end
   private_class_method :client
 
-  def self.build_message(dni_number, formatted_birthdate, postal_code)
-    validate_parameters!(dni_number, formatted_birthdate, postal_code)
+  def self.build_message(document_number, formatted_birthdate, postal_code)
+    validate_parameters!(document_number, formatted_birthdate, postal_code)
 
     {
       idioma: 'ca/es',
-      dni: dni_number,
+      dni: document_number,
       letra: '', # letter is not checked by census
       obs: '',
       obj: '',
@@ -44,9 +44,9 @@ class CensusClient
   end
   private_class_method :census_endpoint
 
-  def self.validate_parameters!(dni_number, formatted_birthdate, postal_code)
-    if /^\d{8}$/.match(dni_number).nil? || /^\d{5}$/.match(postal_code).nil? || /^\d{2}\/\d{2}\/\d{4}$/.match(formatted_birthdate).nil?
-      Rails.logger.info "[Census WS] Attempted to build invalid message: dni_number=#{dni_number}, formatted_birthdate=#{formatted_birthdate}, postal_code=#{postal_code}"
+  def self.validate_parameters!(document_number, formatted_birthdate, postal_code)
+    if /^\d{5}$/.match(postal_code).nil? || /^\d{2}\/\d{2}\/\d{4}$/.match(formatted_birthdate).nil?
+      Rails.logger.info "[Census WS] Attempted to build invalid message: document_number=#{document_number}, formatted_birthdate=#{formatted_birthdate}, postal_code=#{postal_code}"
       raise InvalidParameter
     end
   end

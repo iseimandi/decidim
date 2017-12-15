@@ -9,7 +9,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   attribute :date_of_birth, Date
 
   validates :date_of_birth, presence: true
-  validates :document_number, presence: true, format: { with: /\A[0-9]*\z/ }, length: { is: 8 }
+  validates :document_number, presence: true
   validates :postal_code, presence: true, format: { with: /\A[0-9]*\z/ }, length: { is: 5 }
 
   validate :user_exists_in_census
