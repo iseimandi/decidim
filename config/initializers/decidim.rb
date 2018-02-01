@@ -3,7 +3,6 @@
 Decidim.configure do |config|
   config.application_name = "My Application Name"
   config.mailer_sender = Rails.application.secrets.mailer_sender
-  config.authorization_handlers = ["CensusAuthorizationHandler"]
   config.default_locale = :ca
   config.available_locales = [:ca, :es]
 
@@ -40,6 +39,10 @@ Decidim.configure do |config|
   # take over user accounts.
   #
   config.enable_html_header_snippets = false
+end
+
+Decidim::Verifications.register_workflow(:census_authorization_handler) do |auth|
+  auth.form = "CensusAuthorizationHandler"
 end
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
