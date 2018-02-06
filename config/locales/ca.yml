@@ -20,7 +20,8 @@ ca:
     authorization_handlers:
       census_authorization_handler:
         name: Padró municipal
-    authorizations:
+        explanation: Verifica't amb el padró
+    verifications:
       create:
         error: S'ha produït un error en crear l'autorització. És possible que no figuri
           en el cens o sigui menor de 16 anys.

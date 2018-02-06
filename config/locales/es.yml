@@ -19,8 +19,9 @@ es:
   decidim:
     authorization_handlers:
       census_authorization_handler:
+        explanation: Verifícate con el padrón
         name: Padrón municipal
-    authorizations:
+    verifications:
       create:
         error: No ha sido posible verificar a esta persona. Es posible que no figure
           en el censo o sea menor de 16 años.
