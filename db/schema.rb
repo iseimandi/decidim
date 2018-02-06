@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180201162109) do
+ActiveRecord::Schema.define(version: 20180206101947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,42 @@ ActiveRecord::Schema.define(version: 20180201162109) do
     t.datetime "updated_at", null: false
     t.index ["decidim_accountability_result_id"], name: "index_decidim_accountability_timeline_entries_on_results_id"
     t.index ["entry_date"], name: "index_decidim_accountability_timeline_entries_on_entry_date"
+  end
+
+  create_table "decidim_assemblies", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "hashtag"
+    t.integer "decidim_organization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "title", null: false
+    t.jsonb "subtitle", null: false
+    t.jsonb "short_description", null: false
+    t.jsonb "description", null: false
+    t.string "hero_image"
+    t.string "banner_image"
+    t.boolean "promoted", default: false
+    t.datetime "published_at"
+    t.jsonb "developer_group"
+    t.jsonb "meta_scope"
+    t.jsonb "local_area"
+    t.jsonb "target"
+    t.jsonb "participatory_scope"
+    t.jsonb "participatory_structure"
+    t.boolean "show_statistics", default: false
+    t.integer "decidim_scope_id"
+    t.boolean "scopes_enabled", default: true, null: false
+    t.index ["decidim_organization_id", "slug"], name: "index_unique_assembly_slug_and_organization", unique: true
+    t.index ["decidim_organization_id"], name: "index_decidim_assemblies_on_decidim_organization_id"
+  end
+
+  create_table "decidim_assembly_user_roles", force: :cascade do |t|
+    t.integer "decidim_user_id"
+    t.integer "decidim_assembly_id"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_assembly_id", "decidim_user_id", "role"], name: "index_unique_user_and_assembly_role", unique: true
   end
 
   create_table "decidim_attachments", id: :serial, force: :cascade do |t|
@@ -351,6 +387,17 @@ ActiveRecord::Schema.define(version: 20180201162109) do
     t.text "header_snippets"
     t.jsonb "cta_button_text"
     t.string "cta_button_path"
+    t.boolean "enable_omnipresent_banner", default: false, null: false
+    t.jsonb "omnipresent_banner_title"
+    t.jsonb "omnipresent_banner_short_description"
+    t.string "omnipresent_banner_url"
+    t.boolean "highlighted_content_banner_enabled", default: false, null: false
+    t.jsonb "highlighted_content_banner_title"
+    t.jsonb "highlighted_content_banner_short_description"
+    t.jsonb "highlighted_content_banner_action_title"
+    t.jsonb "highlighted_content_banner_action_subtitle"
+    t.string "highlighted_content_banner_action_url"
+    t.string "highlighted_content_banner_image"
     t.index ["host"], name: "index_decidim_organizations_on_host", unique: true
     t.index ["name"], name: "index_decidim_organizations_on_name", unique: true
   end
@@ -633,12 +680,16 @@ ActiveRecord::Schema.define(version: 20180201162109) do
     t.boolean "managed", default: false, null: false
     t.string "roles", default: [], array: true
     t.boolean "email_on_notification", default: false, null: false
+    t.string "nickname", limit: 20
+    t.string "personal_url"
+    t.text "about"
     t.index ["confirmation_token"], name: "index_decidim_users_on_confirmation_token", unique: true
     t.index ["decidim_organization_id"], name: "index_decidim_users_on_decidim_organization_id"
     t.index ["email", "decidim_organization_id"], name: "index_decidim_users_on_email_and_decidim_organization_id", unique: true, where: "((deleted_at IS NULL) AND (managed = false))"
     t.index ["invitation_token"], name: "index_decidim_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_decidim_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_decidim_users_on_invited_by_id"
+    t.index ["nickname", "decidim_organization_id"], name: "index_decidim_users_on_nickame_and_decidim_organization_id", unique: true, where: "((deleted_at IS NULL) AND (managed = false))"
     t.index ["reset_password_token"], name: "index_decidim_users_on_reset_password_token", unique: true
   end
 

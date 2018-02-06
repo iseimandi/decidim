@@ -2,14 +2,11 @@
 
 source "https://rubygems.org"
 
-DECIDIM_VERSION = "0.8.4"
+DECIDIM_VERSION = "0.9.0"
 
 ruby RUBY_VERSION
 
 gem "decidim", DECIDIM_VERSION
-
-# Uncomment the following line if you want to use decidim-assemblies plugin
-# gem "decidim-assemblies", "0.7.1"
 
 gem "bootsnap", require: false
 gem "puma", "~> 3.0"
