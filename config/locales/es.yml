@@ -16,6 +16,7 @@ es:
         day: Día
         month: Mes
         year: Año
+      postal_code_help: Si desea consultar el código postal que tiene o le da algún error al validarlo, consulte la siguiente web de Correos en %{link} en la opción búsqueda de código postal; así podrá consultar el código postal de la dirección donde esté empadronado/a.
   decidim:
     authorization_handlers:
       census_authorization_handler:

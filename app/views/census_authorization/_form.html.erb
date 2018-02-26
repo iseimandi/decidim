@@ -10,6 +10,12 @@
   <%= form.text_field :postal_code %>
 </div>
 
+<div class="flash callout warning" style="margin-bottom: 20px">
+  <p>
+    <b>NOTA</b>: <%= t('.postal_code_help', link: link_to('http://www.correos.es', 'http://www.correos.es')).html_safe %>
+  </p>
+</div>
+
 <%= form.hidden_field :handler_name %>
 
 <div class="actions">

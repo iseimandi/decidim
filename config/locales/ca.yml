@@ -16,6 +16,7 @@ ca:
         day: Dia
         month: Mes
         year: Any
+      postal_code_help: Si vol consultar el codi postal que té o li dona algun error al validar-lo, consulti la següent web de Correos en %{link} en l'opció cerca de codi postal; així podrà consultar el seu codi postal de l'adreça on està empadronada.
   decidim:
     authorization_handlers:
       census_authorization_handler:
