@@ -25,8 +25,8 @@ class CensusClient
   private_class_method :client
 
   def self.build_message(document_number, formatted_birthdate, postal_code)
-    # if document matches DNI pattern, remove letter
-    if /^\d{8}[a-zA-Z]$/.match(document_number)
+    # if document matches DNI pattern or NIE, remove last letter
+    if /^\d{8}[a-zA-Z]$/.match(document_number) || /^[a-zA-Z]\d{7}[a-zA-Z]$/.match(document_number)
       document_number.chop!
     end
 

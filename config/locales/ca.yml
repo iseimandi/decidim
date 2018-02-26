@@ -4,7 +4,7 @@ ca:
     attributes:
       census_authorization_handler:
         date_of_birth: Data de naixement
-        document_number: Número del document d'identitat (DNI sense lletra)
+        document_number: Número del document d'identitat (DNI o NIE sense la lletra final)
         postal_code: Codi postal
   census_authorization:
     errors:
