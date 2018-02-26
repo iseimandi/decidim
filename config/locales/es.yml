@@ -4,7 +4,7 @@ es:
     attributes:
       census_authorization_handler:
         date_of_birth: Fecha de nacimiento
-        document_number: Número del documento de identidad
+        document_number: Número del documento de identidad (DNI sin letra)
         postal_code: Código postal
   census_authorization:
     errors:
