@@ -7,7 +7,7 @@ class CensusClient
   def self.person_exists?(document_number, formatted_birthdate, postal_code)
     message = build_message(document_number, formatted_birthdate, postal_code)
 
-    Rails.logger.info "[Census WS] Sending request with message: #{message}"
+    Rails.logger.info "[Census WS] Sending request with message: #{obfuscated_message(message)}"
 
     response = client.call(:validarpadro_decidim, message: message)
     response_code = response.body[:validarpadro_decidim_response][:result]
@@ -51,10 +51,39 @@ class CensusClient
 
   def self.validate_parameters!(document_number, formatted_birthdate, postal_code)
     if /^\d{5}$/.match(postal_code).nil? || /^\d{2}\/\d{2}\/\d{4}$/.match(formatted_birthdate).nil?
-      Rails.logger.info "[Census WS] Attempted to build invalid message: document_number=#{document_number}, formatted_birthdate=#{formatted_birthdate}, postal_code=#{postal_code}"
+      Rails.logger.info "[Census WS] Attempted to build invalid message: document_number=#{obfuscated_document_number(document_number)}, formatted_birthdate=#{obfuscated_formatted_birthdate(formatted_birthdate)}, postal_code=#{obfuscated_postal_code(postal_code)}"
       raise InvalidParameter
     end
   end
   private_class_method :validate_parameters!
+
+  def self.obfuscated_message(message)
+    message.merge(
+      dni: obfuscated_document_number(message[:dni]),
+      cp: obfuscated_postal_code(message[:cp]),
+      datanaixement: obfuscated_formatted_birthdate(message[:datanaixement])
+    )
+  end
+
+  def self.obfuscated_document_number(document_number)
+    return "<invalid length>" if document_number.length < 6
+    obfuscated_document_number = document_number.dup
+    obfuscated_document_number[2..5] = "****"
+    obfuscated_document_number
+  end
+
+  def self.obfuscated_formatted_birthdate(formatted_birthdate)
+    return "<invalid length>" if formatted_birthdate.length < 2
+    obfuscated_formatted_birthdate = formatted_birthdate.dup
+    obfuscated_formatted_birthdate[0..1] = "**"
+    obfuscated_formatted_birthdate
+  end
+
+  def self.obfuscated_postal_code(postal_code)
+    return "<invalid length>" if postal_code.length < 5
+    obfuscated_postal_code = postal_code.dup
+    obfuscated_postal_code[3..4] = "**"
+    obfuscated_postal_code
+  end
 
 end
