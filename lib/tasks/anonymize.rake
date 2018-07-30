@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "ruby-progressbar"
-
 namespace :anonymize do
   desc "Checks for the environment"
   task :check do
