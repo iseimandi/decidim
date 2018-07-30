@@ -55,20 +55,20 @@ Rails.application.config.i18n.default_locale = Decidim.default_locale
 # decidim rollbar: https://sentry.io/share/issue/6186537079b14d678c4aa63e78fc0af0/
 # PR fix: https://github.com/decidim/decidim/pull/2753/commits/de77190a5a784e41d9a5255fe2b763c6b8da51b6#diff-c5c9cf407e51f6c859a6d77754595162
 
-module Decidim
-  module Verifications
-    class DefaultActionAuthorizer
-      #
-      # Initializes the DefaultActionAuthorizer class.
-      #
-      # authorization - The existing authorization record to be evaluated. Can be nil.
-      # options       - A hash with options related only to the current authorization process.
-      #
-      def initialize(authorization, options)
-        @authorization = authorization
-        @options = options.deep_dup || {} # options hash is cloned to allow changes applied to it without risks
-      end
+# module Decidim
+#   module Verifications
+#     class DefaultActionAuthorizer
+#       #
+#       # Initializes the DefaultActionAuthorizer class.
+#       #
+#       # authorization - The existing authorization record to be evaluated. Can be nil.
+#       # options       - A hash with options related only to the current authorization process.
+#       #
+#       def initialize(authorization, options)
+#         @authorization = authorization
+#         @options = options.deep_dup || {} # options hash is cloned to allow changes applied to it without risks
+#       end
 
-    end
-  end
-end
+#     end
+#   end
+# end

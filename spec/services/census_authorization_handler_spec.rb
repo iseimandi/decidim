@@ -9,8 +9,10 @@ describe CensusAuthorizationHandler do
   let(:document_number) { "12345678" }
   let(:date_of_birth) { Date.civil(1987, 9, 17) }
   let(:postal_code) { '12345' }
+  let(:user) { create :user }
   let(:params) do
     {
+      user: user,
       document_number: document_number,
       date_of_birth: date_of_birth,
       postal_code: postal_code,
