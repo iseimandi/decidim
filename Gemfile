@@ -14,6 +14,7 @@ gem "uglifier", ">= 1.3.0"
 gem "faker", "~> 1.8.4"
 gem "rollbar"
 gem "savon"
+gem "progressbar"
 
 group :development, :test do
   gem "byebug", platform: :mri

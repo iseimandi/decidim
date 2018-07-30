@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "progressbar"
+
 namespace :anonymize do
   desc "Checks for the environment"
   task :check do
