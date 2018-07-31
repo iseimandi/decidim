@@ -55,6 +55,8 @@ namespace :anonymize do
       user.update_columns(
         email: "user-#{user.id}@example.com",
         name: "Anonymized User #{user.id}",
+        nickname: "user-#{user.id}",
+        personal_url: nil,
         encrypted_password: ::BCrypt::Password.create("decidim123456", cost: 1).to_s,
         reset_password_token: nil,
         current_sign_in_at: nil,
