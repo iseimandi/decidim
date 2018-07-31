@@ -51,7 +51,7 @@ namespace :anonymize do
   end
 
   task users: [:check, :environment] do
-    with_progress Decidim::User.where.not(admin: true), name: "users" do |user|
+    with_progress Decidim::User.all, name: "users" do |user|
       user.update_columns(
         email: "user-#{user.id}@example.com",
         name: "Anonymized User #{user.id}",
