@@ -42,12 +42,12 @@ namespace :anonymize do
   end
 
   task proposals: [:check, :environment] do
-    Decidim::Proposals::ProposalVote.delete_all
+    # Decidim::Proposals::ProposalVote.delete_all
 
-    with_progress(Decidim::Proposals::Proposal.all, name: "proposals") do |proposal|
-      proposal.votes.delete_all
-      Decidim::Proposals::Proposal.reset_counters(proposal.id, :proposal_votes_count)
-    end
+    # with_progress(Decidim::Proposals::Proposal.all, name: "proposals") do |proposal|
+    #   proposal.votes.delete_all
+    #   Decidim::Proposals::Proposal.reset_counters(proposal.id, :proposal_votes_count)
+    # end
   end
 
   task users: [:check, :environment] do
