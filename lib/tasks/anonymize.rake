@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "progressbar"
+require "bcrypt"
 
 namespace :anonymize do
   desc "Checks for the environment"
@@ -52,9 +53,9 @@ namespace :anonymize do
   task users: [:check, :environment] do
     with_progress Decidim::User.where.not(admin: true), name: "users" do |user|
       user.update_columns(
-        #email: "email#{user.id}@example.org",
-        #name: "Anonymized User #{user.id}",
-        #encrypted_password: "encryptedpassword#{user.id}",
+        email: "user-#{user.id}@example.com",
+        name: "Anonymized User #{user.id}",
+        encrypted_password: ::BCrypt::Password.create("decidim123456", cost: 1).to_s,
         reset_password_token: nil,
         current_sign_in_at: nil,
         last_sign_in_at: nil,
@@ -62,40 +63,40 @@ namespace :anonymize do
         last_sign_in_ip: nil,
         invitation_token: nil,
         confirmation_token: nil,
-        unconfirmed_email: nil#,
-        #avatar: nil,
-        #extra: {}
+        unconfirmed_email: nil,
+        avatar: nil
       )
 
+      # we have no identities
       # user.identities.find_each do |identity|
       #   identity.update_columns(uid: "anonymized-identity-#{identity.id}")
       # end
 
-      # Decidim::Authorization.where(user: user).find_each do |authorization|
-      #   authorization.update_columns(unique_id: authorization.id)
-      # end
+      Decidim::Authorization.where(user: user).find_each do |authorization|
+        authorization.update_columns(unique_id: authorization.id)
+      end
     end
   end
 
   task user_groups: [:check, :environment] do
     with_progress Decidim::UserGroup.all, name: "user groups" do |user_group|
       user_group.update_columns(
-        #name: "User Group #{user_group.id}",
-        #document_number: "document-#{user_group.id}",
-        phone: "123456",
-        #avatar: nil
+        name: "User Group #{user_group.id}",
+        document_number: "document-#{user_group.id}",
+        phone: "123456789",
+        avatar: nil
       )
     end
   end
 
   task admins: [:check, :environment] do
-    # with_progress Decidim::System::Admin.all, name: "admins" do |admin|
-    #   admin.update_columns(
-    #     email: "email#{admin.id}@anonymized.org",
-    #     encrypted_password: "encryptedpassword#{admin.id}",
-    #     reset_password_token: nil,
-    #     unlock_token: nil
-    #   )
-    # end
+    with_progress Decidim::System::Admin.all, name: "admins" do |admin|
+      admin.update_columns(
+        email: "system-admin-#{admin.id}@example.com",
+        encrypted_password: ::BCrypt::Password.create("decidim123456", cost: 1).to_s,
+        reset_password_token: nil,
+        unlock_token: nil
+      )
+    end
   end
 end
