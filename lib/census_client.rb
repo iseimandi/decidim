@@ -4,7 +4,11 @@ class CensusClient
 
   class InvalidParameter < StandardError; end
 
-  def self.person_exists?(document_number, formatted_birthdate, postal_code)
+  def self.person_exists?(original_document_number, original_formatted_birthdate, original_postal_code)
+    document_number = original_document_number.dup.to_s
+    formatted_birthdate = original_formatted_birthdate.dup.to_s
+    postal_code = original_postal_code.dup
+
     message = build_message(document_number, formatted_birthdate, postal_code)
 
     Rails.logger.info "[Census WS] Sending request with message: #{obfuscated_message(message)}"

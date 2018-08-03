@@ -1,5 +1,5 @@
 # coding: utf-8
-# frozen_string_literal: true
+
 require "rails_helper"
 require "decidim/dev/test/authorization_shared_examples"
 
@@ -9,20 +9,24 @@ describe CensusAuthorizationHandler do
   let(:document_number) { "12345678" }
   let(:date_of_birth) { Date.civil(1987, 9, 17) }
   let(:postal_code) { '12345' }
-  let(:user) { create :user }
+  let(:user) { create(:user, organization: organization) }
+  let(:other_user) { create(:user, organization: organization) }
+  let(:organization) { create :organization }
   let(:params) do
     {
       user: user,
       document_number: document_number,
       date_of_birth: date_of_birth,
-      postal_code: postal_code,
+      postal_code: postal_code
     }
   end
 
   it_behaves_like "an authorization handler"
 
   before do
-    allow(CensusClient).to receive(:person_exists?).and_return(true)
+    allow_any_instance_of(Savon::Client).to receive(:call).and_return(
+      OpenStruct.new(body: { validarpadro_decidim_response: { result: "0" } })
+    )
   end
 
   describe "document_number" do
@@ -67,6 +71,41 @@ describe CensusAuthorizationHandler do
     it "is correctly constructed" do
       expected_unique_id = Digest::MD5.hexdigest("12345678-17/09/1987-#{Rails.application.secrets.secret_key_base}")
       expect(subject.unique_id).to eq(expected_unique_id)
+    end
+
+    it "avoids duplicates" do
+      handler_params = {
+        document_number: "12345678A",
+        date_of_birth: date_of_birth,
+        postal_code: postal_code
+      }
+
+      first_handler = described_class.from_params(
+        handler_params.merge(user: user)
+      )
+
+      expect(first_handler).to be_valid
+
+      expect(Decidim::Authorization.count).to eq 0
+
+      Decidim::Authorization.create_or_update_from(first_handler)
+
+      expect(Decidim::Authorization.count).to eq 1
+
+      second_handler = described_class.from_params(
+        handler_params.merge(user: other_user)
+      )
+
+      expect(second_handler).to_not be_valid
+
+      Decidim::Verifications::AuthorizeUser.call(second_handler) do
+        on(:ok) do
+          Decidim::Authorization.create_or_update_from(second_handler)
+        end
+        on(:invalid) {}
+      end
+
+      expect(Decidim::Authorization.count).to eq 1
     end
   end
 
