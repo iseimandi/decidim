@@ -54,7 +54,11 @@ Rails.application.config.i18n.default_locale = Decidim.default_locale
   attribute :telephone_number_custom, String
 
   validates :official_name_custom, presence: true, length: { minimum: 3 }
-  validates :telephone_number_custom, presence: true, format: { with: /\d{9,}/ }
+  validates(
+    :telephone_number_custom,
+    presence: true,
+    format: { with: /\d{9,}/, message: I18n.t("custom_errors.telephone_format") }
+  )
 end
 
 ::Decidim::AccountForm.class_eval do
@@ -64,10 +68,12 @@ end
   validates :official_name_custom, presence: true, length: { minimum: 3 }, if: ->(form) do
     form.current_user.official_name_custom.present?
   end
-
-  validates :telephone_number_custom, presence: true, format: { with: /\d{9,}/ }, if: ->(form) do
-    form.current_user.telephone_number_custom.present?
-  end
+  validates(
+    :telephone_number_custom,
+    presence: true,
+    format: { with: /\d{9,}/, message: I18n.t("custom_errors.telephone_format") },
+    if: ->(form) { form.current_user.telephone_number_custom.present? }
+  )
 end
 
 ::Decidim::CreateRegistration.class_eval do
