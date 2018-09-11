@@ -68,11 +68,13 @@ end
   validates :official_name_custom, presence: true, length: { minimum: 3 }, if: ->(form) do
     form.current_user.official_name_custom.present?
   end
+  validates :telephone_number_custom, presence: true, if: ->(form) do
+    form.current_user.telephone_number_custom.present?
+  end
   validates(
     :telephone_number_custom,
-    presence: true,
     format: { with: /\d{9,}/, message: I18n.t("custom_errors.telephone_format") },
-    if: ->(form) { form.current_user.telephone_number_custom.present? }
+    if: ->(form) { form.telephone_number_custom.present? || form.current_user.telephone_number_custom.present? }
   )
 end
 
