@@ -714,7 +714,6 @@ DEPENDENCIES
   byebug
   decidim (= 0.13.1)
   decidim-dev (= 0.13.1)
-  decidim-proposals (~> 0.13.1)
   deface
   faker (~> 1.8.4)
   letter_opener_web (~> 1.3.0)
