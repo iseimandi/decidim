@@ -75,7 +75,7 @@ end
   private
 
   def create_user
-    @user = User.create!(
+    @user = ::Decidim::User.create!(
       # defined by Decidim
       email: form.email,
       name: form.name,
