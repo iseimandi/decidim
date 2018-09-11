@@ -1,0 +1,6 @@
+<!-- insert_after ".user-person:first-of-type" -->
+<div class="user-person">
+  <div class="field">
+    <%= f.text_field :telephone_number_custom, help_text: t(".telephone_number_custom_help") %>
+  </div>
+</div>

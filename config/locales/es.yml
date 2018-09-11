@@ -4,8 +4,12 @@ es:
     attributes:
       census_authorization_handler:
         date_of_birth: Fecha de nacimiento
-        document_number: Número del documento de identidad (DNI o NIE sin la letra final)
+        document_number: Número del documento de identidad (DNI o NIE sin la letra
+          final)
         postal_code: Código postal
+      user:
+        official_name_custom: Nombre oficial
+        telephone_number_custom: Teléfono personal
   census_authorization:
     errors:
       messages:
@@ -16,12 +20,27 @@ es:
         day: Día
         month: Mes
         year: Año
-      postal_code_help: Si desea consultar el código postal que tiene o le da algún error al validarlo, consulte la siguiente web de Correos en %{link} en la opción búsqueda de código postal; así podrá consultar el código postal de la dirección donde esté empadronado/a.
+      postal_code_help: Si desea consultar el código postal que tiene o le da algún
+        error al validarlo, consulte la siguiente web de Correos en %{link} en la
+        opción búsqueda de código postal; así podrá consultar el código postal de
+        la dirección donde esté empadronado/a.
   decidim:
     authorization_handlers:
       census_authorization_handler:
         explanation: Verifícate con el padrón
         name: Padrón municipal
+    devise:
+      registrations:
+        new:
+          official_name_custom_help: Sólo será visible por los administradores. Utilizado
+            para realizar las comunicaciones oficiales.
+          telephone_number_custom_help: Sólo será visible por los administradores.
+            Utilizado para realizar las comunicaciones oficiales.
+    proposals:
+      admin:
+        proposals:
+          index:
+            contact: Contacto
     verifications:
       create:
         error: No ha sido posible verificar a esta persona. Es posible que no figure

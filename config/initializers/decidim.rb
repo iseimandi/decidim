@@ -49,26 +49,66 @@ end
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale
 
-# Override this Decidim method, since the fix has not been released yet
-#
-# our rollbar: https://rollbar.com/Populate/decidim-reus/items/29/
-# decidim rollbar: https://sentry.io/share/issue/6186537079b14d678c4aa63e78fc0af0/
-# PR fix: https://github.com/decidim/decidim/pull/2753/commits/de77190a5a784e41d9a5255fe2b763c6b8da51b6#diff-c5c9cf407e51f6c859a6d77754595162
+::Decidim::RegistrationForm.class_eval do
+  attribute :official_name_custom, String
+  attribute :telephone_number_custom, String
 
-# module Decidim
-#   module Verifications
-#     class DefaultActionAuthorizer
-#       #
-#       # Initializes the DefaultActionAuthorizer class.
-#       #
-#       # authorization - The existing authorization record to be evaluated. Can be nil.
-#       # options       - A hash with options related only to the current authorization process.
-#       #
-#       def initialize(authorization, options)
-#         @authorization = authorization
-#         @options = options.deep_dup || {} # options hash is cloned to allow changes applied to it without risks
-#       end
+  validates :official_name_custom, presence: true, length: { minimum: 3 }
+  validates :telephone_number_custom, presence: true, format: { with: /\d{9,}/ }
+end
 
-#     end
-#   end
-# end
+::Decidim::AccountForm.class_eval do
+  attribute :official_name_custom, String
+  attribute :telephone_number_custom, String
+
+  validates :official_name_custom, presence: true, length: { minimum: 3 }, if: ->(form) do
+    form.current_user.official_name_custom.present?
+  end
+
+  validates :telephone_number_custom, presence: true, format: { with: /\d{9,}/ }, if: ->(form) do
+    form.current_user.telephone_number_custom.present?
+  end
+end
+
+::Decidim::CreateRegistration.class_eval do
+
+  private
+
+  def create_user
+    @user = User.create!(
+      # defined by Decidim
+      email: form.email,
+      name: form.name,
+      nickname: form.nickname,
+      password: form.password,
+      password_confirmation: form.password_confirmation,
+      organization: form.current_organization,
+      tos_agreement: form.tos_agreement,
+      newsletter_notifications_at: form.newsletter_at,
+      email_on_notification: true,
+      accepted_tos_version: form.current_organization.tos_version,
+      # custom
+      official_name_custom: form.official_name_custom,
+      telephone_number_custom: form.telephone_number_custom
+    )
+  end
+
+end
+
+::Decidim::UpdateAccount.class_eval do
+
+  private
+
+  def update_personal_data
+    # defined by Decidim
+    @user.name = @form.name
+    @user.nickname = @form.nickname
+    @user.email = @form.email
+    @user.personal_url = @form.personal_url
+    @user.about = @form.about
+    # custom
+    @user.official_name_custom = @form.official_name_custom
+    @user.telephone_number_custom = @form.telephone_number_custom
+  end
+
+end

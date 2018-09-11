@@ -1,0 +1,4 @@
+<!-- insert_after "th:nth-of-type(10)" -->
+<th>
+  <%= t(".contact") %>
+</th>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_125215) do
+ActiveRecord::Schema.define(version: 2018_09_06_112028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
@@ -979,6 +979,8 @@ ActiveRecord::Schema.define(version: 2018_07_30_125215) do
     t.datetime "accepted_tos_version"
     t.string "newsletter_token", default: ""
     t.datetime "newsletter_notifications_at"
+    t.string "telephone_number_custom"
+    t.string "official_name_custom"
     t.index ["confirmation_token"], name: "index_decidim_users_on_confirmation_token", unique: true
     t.index ["decidim_organization_id"], name: "index_decidim_users_on_decidim_organization_id"
     t.index ["email", "decidim_organization_id"], name: "index_decidim_users_on_email_and_decidim_organization_id", unique: true, where: "((deleted_at IS NULL) AND (managed = false))"

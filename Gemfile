@@ -15,6 +15,7 @@ gem "faker", "~> 1.8.4"
 gem "rollbar"
 gem "savon"
 gem "progressbar"
+gem "deface"
 
 group :development, :test do
   gem "byebug", platform: :mri
