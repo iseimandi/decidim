@@ -1,4 +1,4 @@
-<!-- insert_after ".user-person:first-of-type" -->
+<!-- insert_after ".user-person:last-of-type" -->
 <div class="user-person">
   <div class="field">
     <%= f.text_field :telephone_number_custom, help_text: t("decidim.devise.registrations.new.telephone_number_custom_help") %>
