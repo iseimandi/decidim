@@ -49,16 +49,25 @@ end
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale
 
+TELEPHONE_NUMBER_REGEXP = /^\d{9,}$/
+NORMALIZE_TELEPHONE_REGEXP = /\.|\ |\-|\_/
+
 ::Decidim::RegistrationForm.class_eval do
   attribute :official_name_custom, String
   attribute :telephone_number_custom, String
 
   validates :official_name_custom, presence: true, length: { minimum: 3 }
-  validates(
-    :telephone_number_custom,
-    presence: true,
-    format: { with: /\d{9,}/, message: I18n.t("custom_errors.telephone_format") }
-  )
+  validates :telephone_number_custom, presence: true
+  validate :telephone_number_custom_format
+
+  def telephone_number_custom_format
+    self.telephone_number_custom = telephone_number_custom.gsub(NORMALIZE_TELEPHONE_REGEXP, "")
+
+    unless TELEPHONE_NUMBER_REGEXP =~ telephone_number_custom
+      errors.add(:telephone_number_custom, I18n.t("custom_errors.telephone_format"))
+    end
+  end
+
 end
 
 ::Decidim::AccountForm.class_eval do
@@ -71,11 +80,21 @@ end
   validates :telephone_number_custom, presence: true, if: ->(form) do
     form.current_user.telephone_number_custom.present?
   end
-  validates(
-    :telephone_number_custom,
-    format: { with: /\d{9,}/, message: I18n.t("custom_errors.telephone_format") },
-    if: ->(form) { form.telephone_number_custom.present? || form.current_user.telephone_number_custom.present? }
-  )
+
+  validate :telephone_number_custom_format
+
+  private
+
+  def telephone_number_custom_format
+    return unless telephone_number_custom.present?
+
+    self.telephone_number_custom = telephone_number_custom.gsub(NORMALIZE_TELEPHONE_REGEXP, "")
+
+    unless TELEPHONE_NUMBER_REGEXP =~ telephone_number_custom
+      errors.add(:telephone_number_custom, I18n.t("custom_errors.telephone_format"))
+    end
+  end
+
 end
 
 ::Decidim::CreateRegistration.class_eval do
