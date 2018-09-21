@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-DECIDIM_VERSION = "0.9.2"
+DECIDIM_VERSION = "0.13.1"
 
 ruby RUBY_VERSION
 
@@ -14,6 +14,8 @@ gem "uglifier", ">= 1.3.0"
 gem "faker", "~> 1.8.4"
 gem "rollbar"
 gem "savon"
+gem "progressbar"
+gem "deface"
 
 group :development, :test do
   gem "byebug", platform: :mri

@@ -1,0 +1,6 @@
+<!-- insert_after ".user-person:first-of-type" -->
+<div class="user-person">
+  <div class="field">
+    <%= f.text_field :official_name_custom, help_text: t("decidim.devise.registrations.new.official_name_custom_help") %>
+  </div>
+</div>

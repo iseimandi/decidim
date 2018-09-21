@@ -6,26 +6,39 @@ es:
         date_of_birth: Fecha de nacimiento
         document_number: Número del documento de identidad (DNI o NIE sin la letra final)
         postal_code: Código postal
+      user:
+        official_name_custom: Nombre oficial
+        telephone_number_custom: Teléfono personal
   census_authorization:
     errors:
       messages:
-        not_in_census: Esta persona no figura en el censo municipal o es menor de
-          16 años
+        not_in_census: Esta persona no figura en el censo municipal o es menor de 16 años
     form:
       date_select:
         day: Día
         month: Mes
         year: Año
       postal_code_help: Si desea consultar el código postal que tiene o le da algún error al validarlo, consulte la siguiente web de Correos en %{link} en la opción búsqueda de código postal; así podrá consultar el código postal de la dirección donde esté empadronado/a.
+  custom_errors:
+    telephone_format: Sólo dígitos (y al menos 9)
   decidim:
     authorization_handlers:
       census_authorization_handler:
         explanation: Verifícate con el padrón
         name: Padrón municipal
+    devise:
+      registrations:
+        new:
+          official_name_custom_help: Sólo será visible por los administradores. Utilizado para realizar las comunicaciones oficiales.
+          telephone_number_custom_help: Sólo será visible por los administradores. Utilizado para realizar las comunicaciones oficiales.
+    proposals:
+      admin:
+        proposals:
+          index:
+            contact: Contacto
     verifications:
       create:
-        error: No ha sido posible verificar a esta persona. Es posible que no figure
-          en el censo o sea menor de 16 años.
+        error: No ha sido posible verificar a esta persona. Es posible que no figure en el censo o sea menor de 16 años.
       new:
         authorize: Autorizar
   layouts:
@@ -33,8 +46,7 @@ es:
       wrapper:
         accessibility: Accesibilidad
         accessibility_link_title: Consulta la política de accesibilidad
-        city_council_address: "© Ayuntamiento de Reus  Plaza del Mercadal · 43201
-          Reus"
+        city_council_address: "© Ayuntamiento de Reus  Plaza del Mercadal · 43201 Reus"
         contact: Contacto
         cookies_policy: Política de cookies
         follow_us: Síguenos en las redes
