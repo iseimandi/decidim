@@ -56,7 +56,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
   def user_exists_in_census
     if !CensusClient.person_exists?(document_number, formatted_birthdate, postal_code)
-      errors.add(:wadus, 'wadus')
+      errors.add(:person_exists_in_census, 'person_exists_in_census')
     elsif [telephone_number_custom, official_name_custom].any?(&:present?)
       user.telephone_number_custom = telephone_number_custom if telephone_number_custom.present?
       user.official_name_custom = official_name_custom if official_name_custom.present?
