@@ -20,10 +20,13 @@ describe CensusAuthorizationHandler do
       postal_code: postal_code
     }
   end
+  let(:official_name) { "Napoleón Bonaparte" }
+  let(:telephone_number) { "123456789" }
 
   it_behaves_like "an authorization handler"
 
   before do
+    user.update_attributes!(official_name_custom: official_name, telephone_number_custom: telephone_number)
     allow_any_instance_of(Savon::Client).to receive(:call).and_return(
       OpenStruct.new(body: { validarpadro_decidim_response: { result: "0" } })
     )

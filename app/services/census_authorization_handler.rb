@@ -57,9 +57,9 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   def user_exists_in_census
     if !CensusClient.person_exists?(document_number, formatted_birthdate, postal_code)
       errors.add(:wadus, 'wadus')
-    else
-      user.telephone_number_custom = telephone_number_custom
-      user.official_name_custom = official_name_custom
+    elsif [telephone_number_custom, official_name_custom].any?(&:present?)
+      user.telephone_number_custom = telephone_number_custom if telephone_number_custom.present?
+      user.official_name_custom = official_name_custom if official_name_custom.present?
       user.save!
     end
   end
@@ -71,7 +71,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   def telephone_number_custom_format
     return unless user.telephone_number_custom.blank?
 
-    self.telephone_number_custom = telephone_number_custom.gsub(NORMALIZE_TELEPHONE_REGEXP, "")
+    self.telephone_number_custom = telephone_number_custom.to_s.gsub(NORMALIZE_TELEPHONE_REGEXP, "")
 
     unless TELEPHONE_NUMBER_REGEXP =~ telephone_number_custom
       errors.add(:telephone_number_custom, I18n.t("custom_errors.telephone_format"))

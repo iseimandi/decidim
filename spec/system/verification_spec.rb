@@ -74,6 +74,8 @@ describe "Verification", type: :system do
 
         user.reload
 
+        expect(user.official_name_custom).to eq(official_name)
+        expect(user.telephone_number_custom).to eq(telephone_number)
         expect(::Decidim::Authorization.exists?(decidim_user_id: user.id)).to be_truthy
       end
     end
