@@ -4,15 +4,29 @@ require 'census_client'
 
 class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
+  TELEPHONE_NUMBER_REGEXP = /^\d{9,}$/
+  NORMALIZE_TELEPHONE_REGEXP = /\.|\ |\-|\_/
+
   attribute :document_number, String
   attribute :postal_code, String
   attribute :date_of_birth, Date
+  attribute :official_name_custom, String
+  attribute :telephone_number_custom, String
 
   validates :date_of_birth, presence: true
   validates :document_number, presence: true
   validates :postal_code, presence: true, format: { with: /\A[0-9]*\z/ }, length: { is: 5 }
 
-  validate :user_exists_in_census
+  validates :official_name_custom, presence: true, length: { minimum: 3 }, if: ->(form) do
+    form.user.official_name_custom.blank?
+  end
+  validates :telephone_number_custom, presence: true, if: ->(form) do
+    form.user.telephone_number_custom.blank?
+  end
+  validate :telephone_number_custom_format
+
+  validate :user_exists_in_census # must be declared as the last validation so custom
+                                  # fields are not saved unless census call succeeds
 
   def self.from_params(params, additional_params = {})
     instance = super(params, additional_params)
@@ -43,11 +57,25 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   def user_exists_in_census
     if !CensusClient.person_exists?(document_number, formatted_birthdate, postal_code)
       errors.add(:wadus, 'wadus')
+    else
+      user.telephone_number_custom = telephone_number_custom
+      user.official_name_custom = official_name_custom
+      user.save!
     end
   end
 
   def formatted_birthdate
     date_of_birth.strftime('%d/%m/%Y') if date_of_birth.present?
+  end
+
+  def telephone_number_custom_format
+    return unless user.telephone_number_custom.blank?
+
+    self.telephone_number_custom = telephone_number_custom.gsub(NORMALIZE_TELEPHONE_REGEXP, "")
+
+    unless TELEPHONE_NUMBER_REGEXP =~ telephone_number_custom
+      errors.add(:telephone_number_custom, I18n.t("custom_errors.telephone_format"))
+    end
   end
 
 end

@@ -1,3 +1,9 @@
+<% if current_user.official_name_custom.blank? %>
+  <div class="field">
+    <%= form.text_field :official_name_custom, help_text: t("decidim.devise.registrations.new.official_name_custom_help") %>
+  </div>
+<% end %>
+
 <div class="field">
   <%= form.text_field :document_number %>
 </div>
@@ -5,6 +11,12 @@
 <div class="field date">
   <%= form.date_select :date_of_birth, start_year: 1900, end_year: 16.years.ago.year, default: 35.years.ago, prompt: { day: t(".date_select.day"), month: t(".date_select.month"), year: t(".date_select.year") } %>
 </div>
+
+<% if current_user.telephone_number_custom.blank? %>
+  <div class="field">
+    <%= form.text_field :telephone_number_custom, help_text: t("decidim.devise.registrations.new.telephone_number_custom_help") %>
+  </div>
+<% end %>
 
 <div class="field">
   <%= form.text_field :postal_code %>
