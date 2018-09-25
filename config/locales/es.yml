@@ -5,7 +5,9 @@ es:
       census_authorization_handler:
         date_of_birth: Fecha de nacimiento
         document_number: Número del documento de identidad (DNI o NIE sin la letra final)
+        official_name_custom: Nombre oficial
         postal_code: Código postal
+        telephone_number_custom: Teléfono personal
       user:
         official_name_custom: Nombre oficial
         telephone_number_custom: Teléfono personal

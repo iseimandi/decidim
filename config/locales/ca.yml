@@ -5,7 +5,9 @@ ca:
       census_authorization_handler:
         date_of_birth: Data de naixement
         document_number: Número del document d'identitat (DNI o NIE sense la lletra final)
+        official_name_custom: Nom oficial
         postal_code: Codi postal
+        telephone_number_custom: Telèfon personal
       user:
         official_name_custom: Nom oficial
         telephone_number_custom: Telèfon personal
