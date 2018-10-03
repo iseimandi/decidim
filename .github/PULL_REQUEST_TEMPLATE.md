@@ -8,3 +8,4 @@
 - [ ] I've checked the newsletter preferences are kept after the migrations
 - [ ] I've sent a test newsletter in staging environment
 - [ ] I've done general browsing both in front and backoffice, and created a test proposal
+- [ ] I've reviewed the changelog and ran the necessary commands in staging
