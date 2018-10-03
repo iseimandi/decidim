@@ -55,6 +55,26 @@ describe "Verification", type: :system do
       end
     end
 
+    describe "when any field is invalid" do
+      it "rejects the authorization and does not update custom fields" do
+        click_link "Padró municipal"
+
+        fill_in_authorization_form
+        fill_in "authorization_handler[official_name_custom]", with: official_name
+        fill_in "authorization_handler[telephone_number_custom]", with: "123a"
+
+        click_button "Autoritzar"
+
+        expect(page).to have_content("There was an error creating the authorization")
+
+        user.reload
+
+        expect(user.official_name_custom).to be_blank
+        expect(user.telephone_number_custom).to be_blank
+        expect(::Decidim::Authorization.exists?(decidim_user_id: user.id)).to be_falsey
+      end
+    end
+
     describe "when official name and telephone number are already set" do
       before do
         user.update_attributes!(official_name_custom: official_name, telephone_number_custom: telephone_number)
