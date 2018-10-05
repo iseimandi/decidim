@@ -16,6 +16,7 @@ gem "rollbar"
 gem "savon"
 gem "progressbar"
 gem "deface"
+gem "letter_opener_web", "~> 1.3.0"
 
 group :development, :test do
   gem "byebug", platform: :mri
@@ -24,7 +25,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "letter_opener_web", "~> 1.3.0"
   gem "listen", "~> 3.1.0"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
