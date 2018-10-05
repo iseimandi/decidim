@@ -87,8 +87,8 @@ Rails.application.configure do
   config.deface.enabled = ENV['DEFACE_ENABLED'] == 'true'
 
   # ActionMailer
-  # config.active_job.queue_adapter     = :sidekiq
-  # config.active_job.queue_name_prefix = "decidim_application_#{Rails.env}"
+  config.active_job.queue_adapter     = :sidekiq
+  config.active_job.queue_name_prefix = "decidim_application_#{Rails.env}"
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :letter_opener_web
 
