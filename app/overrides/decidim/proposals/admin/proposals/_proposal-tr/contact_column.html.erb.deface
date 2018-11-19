@@ -2,9 +2,9 @@
 <td>
     <% proposal.authors.each do |author| %>
 
-      <% author_name = author.official_name_custom || author.name %>
+      <% author_name = author.try(:official_name_custom) || author.name %>
 
-      <% if author.telephone_number_custom.present? %>
+      <% if author.try(:telephone_number_custom).present? %>
         <%= author_name %> - <%= author.telephone_number_custom %>
       <% else %>
         <%= author_name %>
