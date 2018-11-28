@@ -23,7 +23,7 @@ describe "Registration", type: :system do
   context "when signing up" do
     describe "on first sight" do
       it "shows fields empty" do
-        expect(page).to have_content("Sign up to participate")
+        expect(page).to have_content("Crea un compte per poder participar")
         expect(page).to have_field("user_name", with: "")
         expect(page).to have_field("user_nickname", with: "")
         expect(page).to have_field("user_email", with: "")
@@ -47,7 +47,7 @@ describe "Registration", type: :system do
       within "form.new_user" do
         find("*[type=submit]").click
       end
-      click_button "Check and continue"
+      click_button "Marca i continua"
       expect(page).to have_current_path decidim.new_user_registration_path
       expect(page).to have_css("#sign-up-newsletter-modal", visible: false)
       expect(page).to have_field("user_newsletter", checked: true)
@@ -57,7 +57,7 @@ describe "Registration", type: :system do
       within "form.new_user" do
         find("*[type=submit]").click
       end
-      click_button "Keep uncheck"
+      click_button "Deixa desmarcada"
       expect(page).to have_css("#sign-up-newsletter-modal", visible: false)
       fill_registration_form
       within "form.new_user" do

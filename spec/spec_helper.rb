@@ -99,10 +99,10 @@ RSpec.configure do |config|
   config.order = :random
 
   config.before(:each) do
-    I18n.available_locales = %i(en ca es)
-    I18n.default_locale = :en
-    I18n.locale = :en
-    Decidim.available_locales = %i(en ca es)
-    Decidim.default_locale = :en
+    I18n.available_locales = %i(ca es en) # :en needs to be available for Faker fallbacks
+    I18n.default_locale = :ca
+    I18n.locale = :ca
+    Decidim.available_locales = %i(ca es en)
+    Decidim.default_locale = :ca
   end
 end

@@ -31,7 +31,7 @@ describe "Account", type: :system do
         end
 
         within_flash_messages do
-          expect(page).to have_content("successfully")
+          expect(page).to have_content("correctament")
         end
 
         within ".title-bar" do
@@ -41,7 +41,7 @@ describe "Account", type: :system do
         user.reload
 
         within_user_menu do
-          find("a", text: "public profile").click
+          find("a", text: "perfil públic").click
         end
 
         visit decidim.account_path

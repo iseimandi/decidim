@@ -14,7 +14,7 @@ describe "Verification", type: :system do
   def fill_in_authorization_form(options = {})
     fill_in "authorization_handler[document_number]", with: "12345678"
     select "12", from: "authorization_handler_date_of_birth_3i"
-    select "January", from: "authorization_handler_date_of_birth_2i"
+    select "Gener", from: "authorization_handler_date_of_birth_2i"
     select "1979", from: "authorization_handler_date_of_birth_1i"
     fill_in "authorization_handler[postal_code]", with: "12345"
 
@@ -28,7 +28,7 @@ describe "Verification", type: :system do
     switch_to_host(organization.host)
     login_as user, scope: :user
     visit decidim.account_path
-    click_link "Authorizations"
+    click_link "Autoritzacions"
   end
 
   context "when user is registered in census" do
@@ -45,7 +45,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("You've been successfully authorized")
+        expect(page).to have_content("Has estat autoritzat amb èxit")
 
         user.reload
 
@@ -65,7 +65,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("There was an error creating the authorization")
+        expect(page).to have_content("S'ha produït un error en crear l'autorització")
 
         user.reload
 
@@ -90,7 +90,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("You've been successfully authorized")
+        expect(page).to have_content("Has estat autoritzat amb èxit")
 
         user.reload
 
@@ -115,7 +115,7 @@ describe "Verification", type: :system do
 
       click_button "Autoritzar"
 
-      expect(page).to have_content("There was an error creating the authorization")
+      expect(page).to have_content("S'ha produït un error en crear l'autorització")
 
       user.reload
 
