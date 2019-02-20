@@ -7,5 +7,8 @@ Rails.application.routes.draw do
   end
 
   mount Decidim::Core::Engine => "/"
-  mount Sidekiq::Web => "/sidekiq"
+
+  authenticate :user, ->(user) { user.admin } do
+    mount Sidekiq::Web => '/admin/sidekiq'
+  end
 end
