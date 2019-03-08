@@ -4,7 +4,7 @@ require "sidekiq/web"
 
 Sidekiq::Logging.logger.level = Rails.logger.level
 
-redis_database = { url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/0" } }
+redis_database = { url: ENV.fetch("REDIS_URL") }
 
 Sidekiq.configure_server do |config|
   config.redis = redis_database
