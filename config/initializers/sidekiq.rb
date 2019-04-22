@@ -6,7 +6,7 @@ Sidekiq::Logging.logger.level = Rails.logger.level
 
 redis_database = {
   url: ENV.fetch("REDIS_URL"),
-  network_timeout: Rails.env.staging? ? 10 : 1
+  network_timeout: Rails.env.staging? ? 15 : 1
 }
 
 Sidekiq.configure_server do |config|
