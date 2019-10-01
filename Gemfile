@@ -6,10 +6,10 @@ DECIDIM_VERSION = "0.18.0"
 
 ruby RUBY_VERSION
 
-if ENV["USE_LOCAL_DECIDIM"]
-  decidim_path = { path: "#{ENV['DEV_DIR']}/decidim" }
+if ENV["RAILS_ENV"] == "development"
+  decidim_path = { path: "#{ENV['DEV_DIR']}/decidim-populate" }
 else
-  decidim_path = DECIDIM_VERSION
+  decidim_path = { git: "https://github.com/populatetools/decidim", branch: "verifications-audit" }
 end
 
 gem "decidim", decidim_path
