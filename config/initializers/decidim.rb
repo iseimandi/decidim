@@ -139,3 +139,13 @@ end
   end
 
 end
+
+# This fix is in master, bypass it for the moment
+# https://github.com/decidim/decidim/pull/5263/files
+::Decidim::Proposals::Proposal.class_eval do
+
+  def self.only_emendations
+    []
+  end
+
+end
