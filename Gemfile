@@ -6,7 +6,13 @@ DECIDIM_VERSION = "0.18.0"
 
 ruby RUBY_VERSION
 
-gem "decidim", DECIDIM_VERSION
+if ENV["USE_LOCAL_DECIDIM"]
+  decidim_path = { path: "#{ENV['DEV_DIR']}/decidim" }
+else
+  decidim_path = DECIDIM_VERSION
+end
+
+gem "decidim", decidim_path
 
 gem "bootsnap", require: false
 gem "puma", "~> 3.0"
