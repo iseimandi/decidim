@@ -18,7 +18,7 @@ describe "Account", type: :system do
       visit decidim.root_path
 
       within_user_menu do
-        find("a", text: "account").click
+        find("a", text: "compte").click
       end
 
       expect(page).to have_css("form.edit_user")
@@ -40,7 +40,7 @@ describe "Account", type: :system do
         end
 
         within_flash_messages do
-          expect(page).to have_content("successfully")
+          expect(page).to have_content("correctament")
         end
 
         within ".title-bar" do
@@ -50,7 +50,7 @@ describe "Account", type: :system do
         user.reload
 
         within_user_menu do
-          find("a", text: "public profile").click
+          find("a", text: "perfil públic").click
         end
 
         expect(page).to have_content("example.org")
@@ -71,7 +71,7 @@ describe "Account", type: :system do
           end
 
           within_flash_messages do
-            expect(page).to have_content("successfully")
+            expect(page).to have_content("correctament")
           end
 
           expect(user.reload.valid_password?("sekritpass123")).to eq(true)
@@ -106,7 +106,7 @@ describe "Account", type: :system do
           end
 
           within_flash_messages do
-            expect(page).to have_content("email to confirm")
+            expect(page).to have_content("correu electrònic per confirmar")
           end
         end
       end
@@ -127,7 +127,7 @@ describe "Account", type: :system do
         end
 
         within_flash_messages do
-          expect(page).to have_content("successfully")
+          expect(page).to have_content("correctament")
         end
       end
     end
@@ -140,12 +140,12 @@ describe "Account", type: :system do
       it "the user can delete his account" do
         fill_in :delete_account_delete_reason, with: "I just want to delete my account"
 
-        click_button "Delete my account"
+        click_button "Eliminar el meu compte"
 
-        click_button "Yes, I want to delete my account"
+        click_button "Sí, vull eliminar el meu compte"
 
         within_flash_messages do
-          expect(page).to have_content("successfully")
+          expect(page).to have_content("correctament")
         end
 
         find(".sign-in-link").click
@@ -156,7 +156,7 @@ describe "Account", type: :system do
           find("*[type=submit]").click
         end
 
-        expect(page).to have_no_content("Signed in successfully")
+        expect(page).to have_no_content("S'ha iniciat la sessió correctament")
         expect(page).to have_no_content(user.name)
       end
     end
