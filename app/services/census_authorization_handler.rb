@@ -18,12 +18,12 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   validates :postal_code, presence: true, format: { with: /\A[0-9]*\z/ }, length: { is: 5 }
 
   validates :official_name_custom, presence: true, length: { minimum: 3 }, if: ->(form) do
-    form.user.official_name_custom.blank?
+    form.user.official_name_custom.blank? && !form.user.managed
   end
   validates :telephone_number_custom, presence: true, if: ->(form) do
-    form.user.telephone_number_custom.blank?
+    form.user.telephone_number_custom.blank? && !form.user.managed
   end
-  validate :telephone_number_custom_format
+  validate :telephone_number_custom_format, unless: ->(form) { form.user.managed }
 
   validate :user_exists_in_census # must be declared as the last validation so custom
                                   # fields are not saved unless census call succeeds
