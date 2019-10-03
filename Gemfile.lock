@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/populatetools/decidim
-  revision: fde402400be171e69530f61d970036ff70fba354
+  revision: 91c6e29ab82e2eb85a53665e77b4c96b16da715e
   branch: verifications-audit
   specs:
     decidim (0.18.0)
