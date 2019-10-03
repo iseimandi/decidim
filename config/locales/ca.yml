@@ -51,6 +51,11 @@ ca:
             contact: Contacte
     verifications:
       authorizations:
+        error_log:
+          document_number: Document
+          email: Correu-e
+          postal_code: Codi postal
+          managed_user: Administrat
         first_login:
           actions:
             census_authorization_handler: Verificació amb el padró

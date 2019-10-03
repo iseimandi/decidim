@@ -50,6 +50,15 @@ es:
           index:
             contact: Contacto
     verifications:
+      authorizations:
+        error_log:
+          document_number: Documento
+          email: Correo-e
+          postal_code: Código postal
+          managed_user: Administrado
+        first_login:
+          actions:
+            census_authorization_handler: Verificación con el padrón
       create:
         error: No ha sido posible verificar a esta persona. Es posible que no figure en el censo o sea menor de 16 años.
       new:

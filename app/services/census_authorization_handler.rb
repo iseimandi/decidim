@@ -81,7 +81,6 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
   def log_success_entry_extras
     {
-      handler_name: handler_name,
       email: CustomAttributeObfuscator.email(user.email),
       document_number: CustomAttributeObfuscator.document_number(document_number),
       postal_code: CustomAttributeObfuscator.postal_code(postal_code),
@@ -91,7 +90,6 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
   def log_error_entry_extras
     {
-      handler_name: handler_name,
       email: CustomAttributeObfuscator.email(user.email, false),
       document_number: CustomAttributeObfuscator.document_number(document_number, false),
       postal_code: CustomAttributeObfuscator.postal_code(postal_code, false),
