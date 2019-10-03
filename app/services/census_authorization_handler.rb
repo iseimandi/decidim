@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'census_client'
+require "census_client"
+require "custom_attribute_obfuscator"
 
 class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
@@ -76,6 +77,24 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
     unless TELEPHONE_NUMBER_REGEXP =~ telephone_number_custom
       errors.add(:telephone_number_custom, I18n.t("custom_errors.telephone_format"))
     end
+  end
+
+  def log_success_entry_extras
+    {
+      email: CustomAttributeObfuscator.email(user.email),
+      document_number: CustomAttributeObfuscator.document_number(document_number),
+      postal_code: CustomAttributeObfuscator.postal_code(postal_code),
+      managed_user: user.managed
+    }
+  end
+
+  def log_error_entry_extras
+    {
+      email: CustomAttributeObfuscator.email(user.email, false),
+      document_number: CustomAttributeObfuscator.document_number(document_number, false),
+      postal_code: CustomAttributeObfuscator.postal_code(postal_code, false),
+      managed_user: user.managed
+    }
   end
 
 end

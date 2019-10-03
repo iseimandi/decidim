@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/populatetools/decidim
-  revision: 25a0fc5eee26950d83686ec4c10e281889177dba
+  revision: 91c6e29ab82e2eb85a53665e77b4c96b16da715e
   branch: verifications-audit
   specs:
     decidim (0.18.0)
@@ -353,7 +353,7 @@ GEM
       railties (>= 4.2)
     doorkeeper-i18n (4.0.1)
     equalizer (0.0.11)
-    erb_lint (0.0.29)
+    erb_lint (0.0.30)
       activesupport
       better_html (~> 1.0.7)
       html_tokenizer
@@ -533,7 +533,7 @@ GEM
       request_store (~> 1.1)
     paper_trail-association_tracking (1.1.1)
     parallel (1.17.0)
-    parser (2.6.4.1)
+    parser (2.6.5.0)
       ast (~> 2.4.0)
     pg (1.1.4)
     pg_search (2.3.0)
@@ -629,13 +629,13 @@ GEM
       rspec-rails (~> 3.2)
     rspec-core (3.8.2)
       rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.4)
+    rspec-expectations (3.8.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-html-matchers (0.9.1)
       nokogiri (~> 1)
       rspec (>= 3.0.0.a, < 4)
-    rspec-mocks (3.8.1)
+    rspec-mocks (3.8.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-rails (3.8.2)
@@ -646,7 +646,7 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-support (3.8.2)
+    rspec-support (3.8.3)
     rspec_junit_formatter (0.3.0)
       rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (0.58.2)
