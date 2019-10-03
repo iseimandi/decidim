@@ -28,6 +28,17 @@ es:
       census_authorization_handler:
         explanation: Verifícate con el padrón
         name: Padrón municipal
+      errors:
+        duplicate:
+          managed_user_html: "
+            <p>Ya se ha verificado un usuario con este documento de identificación. Esta asociada a una cuenta administrada con nombre %{name}.</p>
+            <p>Ponte en contacto con un administrador via email (info.participacio@reus.cat) o telefónica (977 010 029) para promocionar la cuenta original y poder participar.</p>
+            "
+          regular_user_html: "
+            <p>Ya se ha verificado un usuario con este documento de identificación. Esta asociada a la cuenta con correo-e %{email}.</p>
+            <p>Trata de hacer login con esa cuenta. Si no recuerdas la contraseña puedes <a href='%{reset_password_link}'>recuperarla</a> para seguir participando.</p>
+            <p>Si sigues teniendo problemas ponte en contacto con un administrador via email (info.participacio@reus.cat) o telefónica (977 010 029).</p>
+            "
     devise:
       registrations:
         new:
