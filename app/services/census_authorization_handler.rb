@@ -57,7 +57,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
     @census_response = CensusClient.make_request(document_number, self.class.format_birthdate(date_of_birth), postal_code)
 
     if !@census_response.registered_in_census?
-      errors.add(:person_exists_in_census, 'person_exists_in_census')
+      errors.add(:base, I18n.t("census_authorization.errors.messages.not_in_census"))
     elsif [telephone_number_custom, official_name_custom].any?(&:present?) && errors.empty?
       user.telephone_number_custom = telephone_number_custom if telephone_number_custom.present?
       user.official_name_custom = official_name_custom if official_name_custom.present?

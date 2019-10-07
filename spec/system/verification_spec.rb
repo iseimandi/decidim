@@ -72,7 +72,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("S'ha produït un error en crear l'autorització")
+        expect(page).to have_content("No hem pogut verificar a aquesta persona")
 
         user.reload
 
@@ -120,7 +120,8 @@ describe "Verification", type: :system do
 
       click_button "Autoritzar"
 
-      expect(page).to have_content("S'ha produït un error en crear l'autorització")
+      expect(page).to have_content("No hem pogut verificar a aquesta persona")
+      expect(page).to have_content("Posa't en contacte amb un administrador (info.participacio@reus.cat / 977.010.029) indicant el teu nom i l'hora actual si vols que revisem el teu cas.")
 
       user.reload
 
@@ -146,9 +147,9 @@ describe "Verification", type: :system do
 
       click_button "Autoritzar"
 
-      expect(page).to have_content("S'ha produït un error en crear l'autorització")
-      expect(page).to have_content("Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada al compte amb correu-e h***y@potter.com.")
-      expect(page).to have_content("Tracta d'entrar com a usuari amb aquest compte. Si no recordes la contrasenya pots recuperar-la per seguir participant.")
+      expect(page).to have_content("Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada al compte amb correu-e h***y@potter.com")
+      expect(page).to have_content("Tracta d'entrar com a usuari amb aquest compte. Si no recordes la contrasenya pots recuperar-la per seguir participant")
+      expect(page).to have_content("Si encara tens problemes posa't en contacte amb un administrador via email (info.participacio@reus.cat) o telefònica (977.010.029)")
 
       expect(::Decidim::Authorization.exists?(decidim_user_id: user.id)).to be_falsey
     end
@@ -170,9 +171,8 @@ describe "Verification", type: :system do
 
       click_button "Autoritzar"
 
-      expect(page).to have_content("S'ha produït un error en crear l'autorització")
-      expect(page).to have_content("Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada a un compte administrat amb nom Har******ter.")
-      expect(page).to have_content("Posa't en contacte amb un administrador per promocionar el compte original i poder participar.")
+      expect(page).to have_content("Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada a un compte administrat amb nom Har******ter")
+      expect(page).to have_content("Posa't en contacte amb un administrador via email (info.participacio@reus.cat) o telefònica (977.010.029) per promocionar el compte original i poder participar")
 
       expect(::Decidim::Authorization.exists?(decidim_user_id: user.id)).to be_falsey
     end
