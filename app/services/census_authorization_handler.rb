@@ -48,25 +48,21 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   end
 
   def unique_id
-    Digest::MD5.hexdigest(
-      "#{document_number}-#{formatted_birthdate}-#{Rails.application.secrets.secret_key_base}"
-    )
+    self.class.build_unique_id(document_number, date_of_birth)
   end
 
   private
 
   def user_exists_in_census
-    if !CensusClient.person_exists?(document_number, formatted_birthdate, postal_code)
-      errors.add(:person_exists_in_census, 'person_exists_in_census')
+    @census_response = CensusClient.make_request(document_number, self.class.format_birthdate(date_of_birth), postal_code)
+
+    if !@census_response.registered_in_census?
+      errors.add(:base, I18n.t("census_authorization.errors.messages.not_in_census"))
     elsif [telephone_number_custom, official_name_custom].any?(&:present?) && errors.empty?
       user.telephone_number_custom = telephone_number_custom if telephone_number_custom.present?
       user.official_name_custom = official_name_custom if official_name_custom.present?
       user.save!
     end
-  end
-
-  def formatted_birthdate
-    date_of_birth.strftime('%d/%m/%Y') if date_of_birth.present?
   end
 
   def telephone_number_custom_format
@@ -84,7 +80,9 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       email: CustomAttributeObfuscator.email(user.email),
       document_number: CustomAttributeObfuscator.document_number(document_number),
       postal_code: CustomAttributeObfuscator.postal_code(postal_code),
-      managed_user: user.managed
+      managed_user: user.managed,
+      census_code: @census_response.response_code,
+      census_message: @census_response.message
     }
   end
 
@@ -93,8 +91,20 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       email: CustomAttributeObfuscator.email(user.email, false),
       document_number: CustomAttributeObfuscator.document_number(document_number, false),
       postal_code: CustomAttributeObfuscator.postal_code(postal_code, false),
-      managed_user: user.managed
+      managed_user: user.managed,
+      census_code: @census_response.response_code,
+      census_message: @census_response.message
     }
+  end
+
+  def self.build_unique_id(document_number, birth_date)
+    Digest::MD5.hexdigest(
+      "#{document_number}-#{format_birthdate(birth_date)}-#{Rails.application.secrets.secret_key_base}"
+    )
+  end
+
+  def self.format_birthdate(date)
+    date.strftime("%d/%m/%Y") if date.present?
   end
 
 end
