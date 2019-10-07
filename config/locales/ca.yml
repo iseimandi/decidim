@@ -56,6 +56,8 @@ ca:
           email: Correu-e
           postal_code: Codi postal
           managed_user: Administrat
+          census_code: Codi del cens
+          census_message: Missatge del cens
         first_login:
           actions:
             census_authorization_handler: Verificació amb el padró

@@ -56,6 +56,8 @@ es:
           email: Correo-e
           postal_code: Código postal
           managed_user: Administrado
+          census_code: Código del censo
+          census_message: Mensaje del censo
         first_login:
           actions:
             census_authorization_handler: Verificación con el padrón

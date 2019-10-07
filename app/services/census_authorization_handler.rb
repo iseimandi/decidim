@@ -56,7 +56,9 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   private
 
   def user_exists_in_census
-    if !CensusClient.person_exists?(document_number, formatted_birthdate, postal_code)
+    @census_response = CensusClient.make_request(document_number, formatted_birthdate, postal_code)
+
+    if !@census_response.registered_in_census?
       errors.add(:person_exists_in_census, 'person_exists_in_census')
     elsif [telephone_number_custom, official_name_custom].any?(&:present?) && errors.empty?
       user.telephone_number_custom = telephone_number_custom if telephone_number_custom.present?
@@ -84,7 +86,9 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       email: CustomAttributeObfuscator.email(user.email),
       document_number: CustomAttributeObfuscator.document_number(document_number),
       postal_code: CustomAttributeObfuscator.postal_code(postal_code),
-      managed_user: user.managed
+      managed_user: user.managed,
+      census_code: @census_response.response_code,
+      census_message: @census_response.message
     }
   end
 
@@ -93,7 +97,9 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       email: CustomAttributeObfuscator.email(user.email, false),
       document_number: CustomAttributeObfuscator.document_number(document_number, false),
       postal_code: CustomAttributeObfuscator.postal_code(postal_code, false),
-      managed_user: user.managed
+      managed_user: user.managed,
+      census_code: @census_response.response_code,
+      census_message: @census_response.message
     }
   end
 

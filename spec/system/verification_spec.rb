@@ -35,7 +35,7 @@ describe "Verification", type: :system do
   context "when user is registered in census" do
 
     before do
-      allow(CensusClient).to receive(:person_exists?).and_return(true)
+      allow(CensusClient).to receive(:make_request).and_return(true)
     end
 
     describe "when official name and telephone number are missing" do
@@ -106,7 +106,7 @@ describe "Verification", type: :system do
   context "when user is not registered in census" do
 
     before do
-      allow(CensusClient).to receive(:person_exists?).and_return(false)
+      allow(CensusClient).to receive(:make_request).and_return(false)
     end
 
     it "rejects the authorization and does not update custom fields" do

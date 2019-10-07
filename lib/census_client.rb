@@ -1,10 +1,11 @@
-require 'savon'
+require "savon"
+require "census_response"
 
 class CensusClient
 
   class InvalidParameter < StandardError; end
 
-  def self.person_exists?(original_document_number, original_formatted_birthdate, original_postal_code)
+  def self.make_request(original_document_number, original_formatted_birthdate, original_postal_code)
     document_number = original_document_number.dup.to_s
     formatted_birthdate = original_formatted_birthdate.dup.to_s
     postal_code = original_postal_code.dup
@@ -18,9 +19,9 @@ class CensusClient
 
     Rails.logger.info "[Census WS] Response code was: #{response_code}"
 
-    return (response_code == '0')
+    return CensusResponse.new(code: response_code)
   rescue InvalidParameter
-    return false
+    CensusResponse.new(code: nil, success: false, message: "Paràmetre invàlid")
   end
 
   def self.client
