@@ -5,7 +5,7 @@ require "rails_helper"
 require "census_client"
 
 describe "Verification", type: :system do
-  let(:organization) { build :organization, available_authorizations: ["census_authorization_handler"] }
+  let(:organization) { create(:organization, available_authorizations: ["census_authorization_handler"]) }
   let(:user) { create(:user, :confirmed, password: password, password_confirmation: password, organization: organization) }
   let(:password) { "dqCFgjfDbC7dPbrv" }
   let(:official_name) { "Napoleón Bonaparte" }
@@ -25,6 +25,7 @@ describe "Verification", type: :system do
   end
 
   before do
+    allow_any_instance_of(Decidim::CookiesHelper).to receive(:cookies_accepted?).and_return(true)
     switch_to_host(organization.host)
     login_as user, scope: :user
     visit decidim.account_path
@@ -45,7 +46,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("Has estat autoritzat amb èxit")
+        expect(page).to have_content("Has estat autoritzada amb correctament")
 
         user.reload
 
@@ -90,7 +91,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("Has estat autoritzat amb èxit")
+        expect(page).to have_content("Has estat autoritzada amb correctament")
 
         user.reload
 
