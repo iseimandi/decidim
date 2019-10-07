@@ -2,7 +2,7 @@
 
 namespace :background_jobs do
 
-  ENQUEUED_JOBS_THRESHOLD = 5
+  ENQUEUED_JOBS_THRESHOLD = 12
 
   task check_pending: [:environment] do
     stats = Sidekiq::Stats.new
