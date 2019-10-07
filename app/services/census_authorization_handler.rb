@@ -48,15 +48,13 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
   end
 
   def unique_id
-    Digest::MD5.hexdigest(
-      "#{document_number}-#{formatted_birthdate}-#{Rails.application.secrets.secret_key_base}"
-    )
+    self.class.build_unique_id(document_number, date_of_birth)
   end
 
   private
 
   def user_exists_in_census
-    @census_response = CensusClient.make_request(document_number, formatted_birthdate, postal_code)
+    @census_response = CensusClient.make_request(document_number, self.class.format_birthdate(date_of_birth), postal_code)
 
     if !@census_response.registered_in_census?
       errors.add(:person_exists_in_census, 'person_exists_in_census')
@@ -65,10 +63,6 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       user.official_name_custom = official_name_custom if official_name_custom.present?
       user.save!
     end
-  end
-
-  def formatted_birthdate
-    date_of_birth.strftime('%d/%m/%Y') if date_of_birth.present?
   end
 
   def telephone_number_custom_format
@@ -101,6 +95,16 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       census_code: @census_response.response_code,
       census_message: @census_response.message
     }
+  end
+
+  def self.build_unique_id(document_number, birth_date)
+    Digest::MD5.hexdigest(
+      "#{document_number}-#{format_birthdate(birth_date)}-#{Rails.application.secrets.secret_key_base}"
+    )
+  end
+
+  def self.format_birthdate(date)
+    date.strftime("%d/%m/%Y") if date.present?
   end
 
 end
