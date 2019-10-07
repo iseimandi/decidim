@@ -72,7 +72,7 @@ describe "Verification", type: :system do
 
         click_button "Autoritzar"
 
-        expect(page).to have_content("No hem pogut verificar a aquesta persona")
+        expect(page).to have_content("S'ha produït un error en crear l'autorització")
 
         user.reload
 
