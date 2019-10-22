@@ -5,6 +5,8 @@ require "custom_attribute_obfuscator"
 
 class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
+  include Decidim::HumanizeBooleansHelper
+
   TELEPHONE_NUMBER_REGEXP = /^\d{9,}$/
   NORMALIZE_TELEPHONE_REGEXP = /\.|\ |\-|\_/
 
@@ -82,7 +84,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       postal_code: CustomAttributeObfuscator.postal_code(postal_code),
       managed_user: user.managed,
       census_code: @census_response.response_code,
-      census_message: @census_response.message
+      census_message: census_message
     }
   end
 
@@ -93,7 +95,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       postal_code: CustomAttributeObfuscator.postal_code(postal_code, false),
       managed_user: user.managed,
       census_code: @census_response.response_code,
-      census_message: @census_response.message
+      census_message: census_message
     }
   end
 
@@ -105,6 +107,19 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
 
   def self.format_birthdate(date)
     date.strftime("%d/%m/%Y") if date.present?
+  end
+
+  def census_message
+    if duplicates.none?
+      @census_response.message
+    else
+      other_user = duplicates.first.user
+
+      """
+      Està empadronat, però hi ha un altre usuari verificat amb les mateixes dades
+      (nom: #{Decidim::AttributeObfuscator.name_hint(other_user.name)}, email: #{CustomAttributeObfuscator.email(other_user.email)})
+      """
+    end
   end
 
 end
