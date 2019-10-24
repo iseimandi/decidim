@@ -9,7 +9,7 @@ ruby RUBY_VERSION
 if ENV["RAILS_ENV"] == "development"
   decidim_path = { path: "#{ENV['DEV_DIR']}/decidim-populate" }
 else
-  decidim_path = { git: "https://github.com/populatetools/decidim", branch: "verifications-audit" }
+ decidim_path = { git: "https://github.com/populatetools/decidim", branch: "reus-custom" }
 end
 
 gem "decidim", decidim_path
