@@ -6,11 +6,11 @@ DECIDIM_VERSION = "0.18.0"
 
 ruby RUBY_VERSION
 
-if ENV["RAILS_ENV"] == "development"
-  decidim_path = { path: "#{ENV['DEV_DIR']}/decidim-populate" }
-else
- decidim_path = { git: "https://github.com/populatetools/decidim", branch: "reus-custom" }
-end
+decidim_path = if ENV["RAILS_ENV"] == "development"
+                 { path: "#{ENV['DEV_DIR']}/decidim-populate" }
+               else
+                 { git: "https://github.com/populatetools/decidim", branch: "reus-custom" }
+               end
 
 gem "decidim", decidim_path
 
@@ -28,7 +28,7 @@ gem "sidekiq", "~> 5.2.1"
 group :development, :test do
   gem "byebug", platform: :mri
   gem "rspec"
-  gem "decidim-dev", DECIDIM_VERSION
+  gem "decidim-dev", decidim_path
 end
 
 group :development do
