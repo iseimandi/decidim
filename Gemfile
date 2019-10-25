@@ -2,14 +2,12 @@
 
 source "https://rubygems.org"
 
-DECIDIM_VERSION = "0.18.0"
-
 ruby RUBY_VERSION
 
 decidim_path = if ENV["RAILS_ENV"] == "development"
                  { path: "#{ENV['DEV_DIR']}/decidim-populate" }
                else
-                 { git: "https://github.com/populatetools/decidim", branch: "reus-custom" }
+                 { git: "https://github.com/populatetools/decidim", branch: "reus-custom-0.19.0" }
                end
 
 gem "decidim", decidim_path
