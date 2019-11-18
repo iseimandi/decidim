@@ -116,7 +116,7 @@ class CensusAuthorizationHandler < Decidim::AuthorizationHandler
       other_user = duplicates.first.user
 
       """
-      Està empadronat, però hi ha un altre usuari verificat amb les mateixes dades
+      Està empadronat, però hi ha #{other_user.managed ? 'un compte administrat' : 'un altre usuari'} verificat amb les mateixes dades
       (nom: #{Decidim::AttributeObfuscator.name_hint(other_user.name)}, email: #{CustomAttributeObfuscator.email(other_user.email)})
       """
     end
