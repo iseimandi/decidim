@@ -14,7 +14,10 @@ ca:
   census_authorization:
     errors:
       messages:
-        not_in_census: Aquesta persona no figura en el cens municipal o és menor de 16 anys
+        not_in_census: |
+          No hem pogut verificar a aquesta persona.
+          Posa't en contacte amb un administrador (info.participacio@reus.cat / 977.010.029)
+          indicant el teu nom i l'hora actual si vols que revisem el teu cas.
     form:
       date_select:
         day: Dia
@@ -28,6 +31,17 @@ ca:
       census_authorization_handler:
         explanation: Verifica't amb el padró
         name: Padró municipal
+      errors:
+        duplicate:
+          managed_user_html: "
+            <p>Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada a un compte administrat amb nom %{name}.</p>
+            <p>Posa't en contacte amb un administrador via email (info.participacio@reus.cat) o telefònica (977.010.029) per promocionar el compte original i poder participar.</p>
+            "
+          regular_user_html: "
+            <p>Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada al compte amb correu-e %{email}.</p>
+            <p>Tracta d'entrar com a usuari amb aquest compte. Si no recordes la contrasenya, <a href='%{logout_link}'>fes logout</a> i punxa a recuperar contrasenya a la pantalla d'iniciar sessió.</p>
+            <p>Si encara tens problemes posa't en contacte amb un administrador via email (info.participacio@reus.cat) o telefònica (977.010.029).</p>
+            "
     devise:
       registrations:
         new:
@@ -40,11 +54,16 @@ ca:
             contact: Contacte
     verifications:
       authorizations:
+        error_log:
+          document_number: Document
+          email: Correu-e
+          postal_code: Codi postal
+          managed_user: Administrat
+          census_code: Codi del cens
+          census_message: Missatge del cens
         first_login:
           actions:
             census_authorization_handler: Verificació amb el padró
-      create:
-        error: S'ha produït un error en crear l'autorització. És possible que no figuri en el cens o sigui menor de 16 anys.
       new:
         authorize: Autoritzar
   layouts:

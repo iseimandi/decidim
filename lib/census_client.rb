@@ -1,10 +1,11 @@
-require 'savon'
+require "savon"
+require "census_response"
 
 class CensusClient
 
   class InvalidParameter < StandardError; end
 
-  def self.person_exists?(original_document_number, original_formatted_birthdate, original_postal_code)
+  def self.make_request(original_document_number, original_formatted_birthdate, original_postal_code)
     document_number = original_document_number.dup.to_s
     formatted_birthdate = original_formatted_birthdate.dup.to_s
     postal_code = original_postal_code.dup
@@ -13,14 +14,19 @@ class CensusClient
 
     Rails.logger.info "[Census WS] Sending request with message: #{obfuscated_message(message)}"
 
-    response = client.call(:validarpadro_decidim, message: message)
-    response_code = response.body[:validarpadro_decidim_response][:result]
+    if (Rails.env.staging? || Rails.env.development?) && original_document_number.include?("#")
+      # Try 12345678#315
+      response_code = original_document_number.split("#").last
+    else
+      response = client.call(:validarpadro_decidim, message: message)
+      response_code = response.body[:validarpadro_decidim_response][:result]
+    end
 
     Rails.logger.info "[Census WS] Response code was: #{response_code}"
 
-    return (response_code == '0')
+    return CensusResponse.new(code: response_code)
   rescue InvalidParameter
-    return false
+    CensusResponse.new(code: nil, success: false, message: "Paràmetre invàlid")
   end
 
   def self.client

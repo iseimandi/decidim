@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_101064) do
+ActiveRecord::Schema.define(version: 2019_10_28_084356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
@@ -658,6 +658,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_101064) do
     t.string "related_object_type"
     t.bigint "related_object_id"
     t.bigint "decidim_category_id"
+    t.index ["day", "metric_type", "decidim_organization_id", "participatory_space_type", "participatory_space_id", "related_object_type", "related_object_id", "decidim_category_id"], name: "idx_metric_by_day_type_org_space_object_category", unique: true
     t.index ["day"], name: "index_decidim_metrics_on_day"
     t.index ["decidim_category_id"], name: "index_decidim_metrics_on_decidim_category_id"
     t.index ["decidim_organization_id"], name: "index_decidim_metrics_on_decidim_organization_id"
@@ -755,6 +756,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_101064) do
     t.boolean "user_groups_enabled", default: false, null: false
     t.jsonb "smtp_settings"
     t.jsonb "colors", default: {}
+    t.boolean "force_users_to_authenticate_before_access_organization", default: false
     t.index ["host"], name: "index_decidim_organizations_on_host", unique: true
     t.index ["name"], name: "index_decidim_organizations_on_name", unique: true
   end
@@ -1096,54 +1098,8 @@ ActiveRecord::Schema.define(version: 2019_09_30_101064) do
     t.index ["topic_id"], name: "index_decidim_static_pages_on_topic_id"
   end
 
-  create_table "decidim_surveys_survey_answer_choices", force: :cascade do |t|
-    t.bigint "decidim_survey_answer_id"
-    t.bigint "decidim_survey_answer_option_id"
-    t.jsonb "body"
-    t.text "custom_body"
-    t.integer "position"
-    t.index ["decidim_survey_answer_id"], name: "index_decidim_surveys_answer_choices_answer_id"
-    t.index ["decidim_survey_answer_option_id"], name: "index_decidim_surveys_answer_choices_answer_option_id"
-  end
-
-  create_table "decidim_surveys_survey_answer_options", force: :cascade do |t|
-    t.bigint "decidim_survey_question_id"
-    t.jsonb "body"
-    t.boolean "free_text"
-    t.index ["decidim_survey_question_id"], name: "index_decidim_surveys_answer_options_question_id"
-  end
-
-  create_table "decidim_surveys_survey_answers", id: :serial, force: :cascade do |t|
-    t.integer "decidim_user_id"
-    t.integer "decidim_survey_id"
-    t.integer "decidim_survey_question_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "body"
-    t.index ["decidim_survey_id"], name: "index_decidim_surveys_survey_answers_on_decidim_survey_id"
-    t.index ["decidim_survey_question_id"], name: "index_decidim_surveys_answers_question_id"
-    t.index ["decidim_user_id"], name: "index_decidim_surveys_survey_answers_on_decidim_user_id"
-  end
-
-  create_table "decidim_surveys_survey_questions", id: :serial, force: :cascade do |t|
-    t.jsonb "body"
-    t.integer "decidim_survey_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "position"
-    t.boolean "mandatory"
-    t.string "question_type"
-    t.integer "max_choices"
-    t.jsonb "description"
-    t.index ["decidim_survey_id"], name: "index_decidim_surveys_survey_questions_on_decidim_survey_id"
-  end
-
   create_table "decidim_surveys_surveys", id: :serial, force: :cascade do |t|
-    t.jsonb "title"
-    t.jsonb "description"
-    t.jsonb "tos"
     t.integer "decidim_component_id"
-    t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["decidim_component_id"], name: "index_decidim_surveys_surveys_on_decidim_component_id"
@@ -1290,6 +1246,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_101064) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
+    t.boolean "confidential", default: true, null: false
     t.index ["decidim_organization_id"], name: "index_oauth_applications_on_decidim_organization_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end

@@ -14,7 +14,10 @@ es:
   census_authorization:
     errors:
       messages:
-        not_in_census: Esta persona no figura en el censo municipal o es menor de 16 años
+        not_in_census: |
+          No hemos podido verificar a esta persona.
+          Ponte en contacto con un administrador (info.participacio@reus.cat / 977.010.029)
+          indicando tu nombre y la hora actual si quieres que revisemos tu caso.
     form:
       date_select:
         day: Día
@@ -28,6 +31,17 @@ es:
       census_authorization_handler:
         explanation: Verifícate con el padrón
         name: Padrón municipal
+      errors:
+        duplicate:
+          managed_user_html: "
+            <p>Ya se ha verificado un usuario con este documento de identificación. Esta asociada a una cuenta administrada con nombre %{name}.</p>
+            <p>Ponte en contacto con un administrador via email (info.participacio@reus.cat) o telefónica (977 010 029) para promocionar la cuenta original y poder participar.</p>
+            "
+          regular_user_html: "
+            <p>Ya se ha verificado un usuario con este documento de identificación. Esta asociada a la cuenta con correo-e %{email}.</p>
+            <p>Trata de hacer login con esa cuenta. Si no recuerdas la contraseña, <a href='%{logout_link}'>haz logout</a> y pincha en recuperar contraseña en la pantalla de iniciar sesión.</p>
+            <p>Si sigues teniendo problemas ponte en contacto con un administrador via email (info.participacio@reus.cat) o telefónica (977 010 029).</p>
+            "
     devise:
       registrations:
         new:
@@ -39,8 +53,17 @@ es:
           index:
             contact: Contacto
     verifications:
-      create:
-        error: No ha sido posible verificar a esta persona. Es posible que no figure en el censo o sea menor de 16 años.
+      authorizations:
+        error_log:
+          document_number: Documento
+          email: Correo-e
+          postal_code: Código postal
+          managed_user: Administrado
+          census_code: Código del censo
+          census_message: Mensaje del censo
+        first_login:
+          actions:
+            census_authorization_handler: Verificación con el padrón
       new:
         authorize: Autorizar
   layouts:
