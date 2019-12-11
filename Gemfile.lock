@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/populatetools/decidim
-  revision: a088de4cc91af22119f4d5605a5ee02b61ad2402
+  revision: 5e4e60d57733c1f4cfaa673a6840d4a038a4d597
   branch: reus-custom-0.19.0
   specs:
     decidim (0.19.0)
@@ -437,7 +437,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-tmpl-rails (1.1.0)
       rails (>= 3.1.0)
-    json (2.2.0)
+    json (2.3.0)
     jwt (2.2.1)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
