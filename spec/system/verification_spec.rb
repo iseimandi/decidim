@@ -148,7 +148,7 @@ describe "Verification", type: :system do
       click_button "Autoritzar"
 
       expect(page).to have_content("Ja s'ha verificat un usuari amb aquest document d'identificació. Està associada al compte amb correu-e h***y@potter.com")
-      expect(page).to have_content("Tracta d'entrar com a usuari amb aquest compte. Si no recordes la contrasenya pots recuperar-la per seguir participant")
+      expect(page).to have_content("Tracta d'entrar com a usuari amb aquest compte. Si no recordes la contrasenya, fes logout i punxa a recuperar contrasenya")
       expect(page).to have_content("Si encara tens problemes posa't en contacte amb un administrador via email (info.participacio@reus.cat) o telefònica (977.010.029)")
 
       expect(::Decidim::Authorization.exists?(decidim_user_id: user.id)).to be_falsey
